@@ -1,1 +1,6 @@
 /target/
+/test-output/
+/Reports/
+/Application logs/
+/Test Scripts Recording/
+/Screenshots/
