@@ -16,7 +16,7 @@ function login() {
     $("#sign_in_fail").css("display", "block");
     setTimeout(function () {
       $("#sign_in_fail").css("display", "none");
-    }, 5000);
+    }, 3500);
   }
 }
 

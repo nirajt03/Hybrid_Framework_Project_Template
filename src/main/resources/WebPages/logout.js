@@ -1,5 +1,5 @@
 function logout() {
-  const response = confirm("Are you sure you want to do that?");
+  const response = confirm("Are you sure you want to log out?");
 
   if (response) {
     window.location.href = "./LoginPage.html";

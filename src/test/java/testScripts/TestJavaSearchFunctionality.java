@@ -13,15 +13,15 @@ import pageObjectModels.SearchPage;
  * 
  * @author Niraj.Tiwari
  */
-public class TestLoginPage extends BaseTest{
+public class TestJavaSearchFunctionality extends BaseTest{
 	/**
-	 * Verify Login for all roles
+	 * Verify Java Search Functionality
 	 *
 	 * @throws Throwable
 	 */
-	@Test(dataProvider = "LoginData", dataProviderClass = dataProvider.class,groups= {"verifyLoginFunctionality","Regression","Smoke"})
-	public void verifyLoginFunctionality(String userType,String testCaseID,String loginType,String expSearchText) throws Throwable {
-		System.out.println("TestScript : Running -> verify Login Functionality");
+	@Test(dataProvider = "JavaSearchFunctionality", dataProviderClass = dataProvider.class,groups= {"verifyJavaSearchFunctionality","Regression","Smoke"})
+	public void verifyJavaSearchFunctionality(String userType,String testCaseID,String loginType,String expSearchText) throws Throwable {
+		System.out.println("TestScript : Running -> Verify Java Search Functionality");
 
 		//Open Application
 		LoginPage loginPage = openApplication(System.getProperty("url"));

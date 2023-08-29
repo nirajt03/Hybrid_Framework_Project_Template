@@ -120,5 +120,5 @@ public class LoginPage extends BasePage{
 	public void clickLogin() {
 		WebElementUtlities.click(driver, driver.findElement(loginBtnBy));
 	}
-
+	
 }

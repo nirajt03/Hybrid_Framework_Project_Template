@@ -16,7 +16,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
-
 import excelUtilities.ExcelUtilities;
 import pageObjectModels.LoginPage;
 import reportUtilities.ReportingUtility;
@@ -85,17 +84,18 @@ public class BaseTest {
 
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass(ITestContext testcontext) throws Throwable {
-		
 		options = new ChromeOptions();
 		options.addArguments("start-maximized");
 		options.addArguments("--remote-allow-origins=*");	
 		options.setBinary("115");
      	//options.setBrowserVersion("116");
-//		Map<String, Object> prefs = new HashMap<>();
-//		prefs.put("profile.default_content_setting_values.media_stream_mic", 2); // enable/disable mic or camera permissions
-//		//value "1" is used for allowing the option, "2" -- for blocking.
-//		//prefs.put("profile.default_content_setting_values.media_stream_camera", 1);
-//		options.setExperimentalOption("prefs", prefs);
+		
+		//Map<String, Object> prefs = new HashMap<>();
+		//prefs.put("profile.default_content_setting_values.media_stream_mic", 2); // enable/disable mic or camera permissions
+		//value "1" is used for allowing the option, "2" -- for blocking.
+		//prefs.put("profile.default_content_setting_values.media_stream_camera", 1);
+		//options.setExperimentalOption("prefs", prefs);
+		
 		System.setProperty("webdriver.http.factory", "jdk-http-client");
 		this.driver = new ChromeDriver(options);
 		testcontext.setAttribute("driver", driver);

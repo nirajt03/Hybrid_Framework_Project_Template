@@ -47,12 +47,12 @@ public class TestNGSuite {
 
 		//all test scripts
 		classList.add(new XmlClass("testScripts.TestLoginPage"));
-		//classList.add(new XmlClass("testScripts.TestLoginPage"));
-		//classList.add(new XmlClass("testScripts.TestLoginPage"));
-		//classList.add(new XmlClass("testScripts.TestLoginPage"));
-		//classList.add(new XmlClass("testScripts.TestLoginPage"));
-
-
+		classList.add(new XmlClass("testScripts.TestLoginPageNegativeScenarios"));
+		classList.add(new XmlClass("testScripts.TestCoursePageFeatures"));
+		classList.add(new XmlClass("testScripts.TestHomePageFeatures"));
+		classList.add(new XmlClass("testScripts.TestSearchPageFeatures"));
+		classList.add(new XmlClass("testScripts.TestJavaSearchFunctionality"));
+		
 		List<String> methods = new ArrayList<String>();
 		TestNG TestNGRun = new TestNG();
 		if(testExeType.equals("Custom") || testExeType.equals("Regression") || testExeType.equals("Smoke") || 

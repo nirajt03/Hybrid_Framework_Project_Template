@@ -111,8 +111,6 @@ public class ArchUtilities  {
 
 		String[][] srchData= {{"TestCaseID","Not To Run"}};
 		allTestData = getRowDataBasedOnTestcaseID(testDataSheetObj,srchData);
-		//allTestData = ExcelUtilities.getRowData(testDataSheetObj,srchData);
-
 		return allTestData;
 	}
 

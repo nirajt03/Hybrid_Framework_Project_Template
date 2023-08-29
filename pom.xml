@@ -6,12 +6,14 @@
 	<artifactId>HybridFrameworkProjectTemplate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>HybridFrameworkProjectTemplate</name>
-	<description>Project template for Hybrid selenium automation framework(keyword driven + data driven + TestNg)</description>
+	<description>Project template for Hybrid selenium automation
+		framework(keyword driven + data driven + TestNg)</description>
 	<properties>
 		<java.version>17</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<FrameWorkUtilityPath>${env.USERPROFILE}\eclipse-workspace\WebAutomationUtility\target\WebAutomationUtility-0.0.1-SNAPSHOT.jar</FrameWorkUtilityPath>
+		<FrameWorkUtilityPath>
+			${env.USERPROFILE}\eclipse-workspace\WebAutomationUtility\target\WebAutomationUtility-0.0.1-SNAPSHOT.jar</FrameWorkUtilityPath>
 	</properties>
 	<dependencies>
 		<!--https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
@@ -20,14 +22,14 @@
 			<artifactId>selenium-java</artifactId>
 			<version>4.11.0</version>
 		</dependency>
-		
 		<!--   use this for webdriver manager, but this requires Java 11+  -->
-		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-http-jdk-client -->
-		 <dependency>
+		<!--
+		https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-http-jdk-client -->
+		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-http-jdk-client</artifactId>
 			<version>4.11.0</version>
-		</dependency> 
+		</dependency>
 		<!--https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -93,6 +95,14 @@
 			<artifactId>opencsv</artifactId>
 			<version>5.7.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.24.2</version>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>com.robust_automation</groupId>
 			<artifactId>FrameWorkUtilities</artifactId>
