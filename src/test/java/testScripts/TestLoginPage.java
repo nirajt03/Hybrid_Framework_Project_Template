@@ -30,12 +30,10 @@ public class TestLoginPage extends BaseTest{
 		//Login to Pluralsight Application
 		SearchPage searchpage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);
 
-	    
-		
-		
-		
-
-				
+		//assert validation
+		String actSearchBoxText = searchpage.getSearchPlaceholderText();
+		Assert.assertEquals(actSearchBoxText, expSearchText);
+						
 		//Logout from Pluralsight Application
 		searchpage.logoutFromPluralsightApplication();
 	}

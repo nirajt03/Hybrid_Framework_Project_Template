@@ -44,8 +44,7 @@ public class ArchUtilities  {
 	 * @return
 	 * @throws Throwable
 	 */
-	@SuppressWarnings({ "rawtypes", "static-access" })
-	public HashMap getUserCredential(String userType,String loginType) throws Throwable {
+	public HashMap<String, String> getUserCredential(String userType,String loginType) throws Throwable  {
 
 		String path = System.getProperty("driverFilePath");
 		ExcelUtilities excelUtil = new ExcelUtilities(path);
@@ -55,7 +54,7 @@ public class ArchUtilities  {
 		Sheet sheetObject = excelUtil.getSheetObject("LoginTestData");
 
 		String[][] searchData={{"UserType",userType}, {"LoginType",loginType}};
-		ArrayList<HashMap<String, String>> rowData = excelUtil.getAllRowsData(sheetObject,searchData);
+		ArrayList<HashMap<String, String>> rowData = ExcelUtilities.getAllRowsData(sheetObject,searchData);
 
 		// Get the Username
 		String userNameValue = rowData.get(0).get("Username");
@@ -76,15 +75,28 @@ public class ArchUtilities  {
 	 * @return
 	 * @throws Throwable
 	 */
-	@SuppressWarnings("unchecked")
-	public SearchPage loginToPluralsightApplication(LoginPage loginPage,String userType,String loginType) throws Throwable {
-		SearchPage searchpage;
+	public SearchPage loginToPluralsightApplication(LoginPage loginPage,String userType,String loginType) throws Throwable  {
 		// Get User Credential
 		HashMap<String, String> usercredential = getUserCredential(userType,loginType);
 
-		searchpage = loginPage.pluralsightApplicationLogin( usercredential.get("Username"), usercredential.get("Password"), loginType);
+		//Login pluralsight application
+		SearchPage searchpage = loginPage.pluralsightApplicationLogin( usercredential.get("Username"), usercredential.get("Password"));
 		System.out.println("Successfully Login To Pluralsight Application Using"+ usercredential.get("Username")+ "::"+usercredential.get("Password")+"Credential");
 		return searchpage;
+	}
+
+	/**
+	 * Check Negative Login Scenarios
+	 * @param loginPage
+	 * @param userType
+	 * @param loginType
+	 * @return
+	 * @throws Throwable
+	 */
+	public String checkNegativeLoginScenarios(LoginPage loginPage, String username, String password) throws Throwable {
+		
+		//Login pluralsight application
+		return loginPage.pluralsightApplicationNegativeLoginScenarios(username, password);
 	}
 
 	/**

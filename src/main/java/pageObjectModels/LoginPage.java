@@ -27,13 +27,11 @@ public class LoginPage extends BasePage{
 
 	/**
 	 * Pluralsight Application Login
-	 * @param clientCode
 	 * @param userName
 	 * @param password
 	 * @return
-	 * @throws Throwable 
 	 */
-	public SearchPage pluralsightApplicationLogin(String username, String password,String loginType) throws Throwable{ //<T extends BasePage>T
+	public SearchPage pluralsightApplicationLogin(String username, String password) { //<T extends BasePage>T
 
 		// Wait till the login page is visible
 		WebElementUtlities.explicitWaitForElementToBeVisible(driver,loginForm);
@@ -58,6 +56,38 @@ public class LoginPage extends BasePage{
 	}
 
 	/**
+	 * Pluralsight Application Negative Login Scenarios
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws  
+	 */
+	public String pluralsightApplicationNegativeLoginScenarios(String username, String password) {
+
+		refreshPage();
+		
+		// Wait till the login page is visible
+		WebElementUtlities.explicitWaitForElementToBeVisible(driver,loginForm);
+
+		// Enter User name
+		enterUsername(username);
+
+		// Enter Password
+		enterPassword(password);
+
+		// Click on Login
+		clickLogin();
+
+		//Header ribbon text
+		String ribbonText = getHeaderRibbonText();
+		
+		//wait till ribbon is invisible
+		checkHeaderRibbonIsInvisible();
+		
+		return ribbonText;
+	}
+
+	/**
 	 * check Header Ribbon Is Visible
 	 * @return boolean
 	 */
@@ -66,8 +96,8 @@ public class LoginPage extends BasePage{
 		WebElementUtlities.explicitWaitForElementToBeVisible(driver, headerRibbonTextVisible, 15);
 		if(!WebElementUtlities.isElementVisible(driver, headerRibbonTextVisible)) {
 			throw new ElementNotInteractableException("Header message is not visible");	
-		}else
-			flag=true;		
+		}
+		flag=true;		
 		return flag;
 	}
 
@@ -88,7 +118,7 @@ public class LoginPage extends BasePage{
 		boolean flag = false;
 		if(getHeaderRibbonText().equalsIgnoreCase("Invalid user name or password")) {
 			flag=true;
-			WebElementUtlities.explicitWaitForElementToBeVisible(driver, headerRibbonTextInvisible, 15);
+			WebElementUtlities.explicitWaitForElementToBeInVisible(driver, headerRibbonTextVisible, 10);
 		}
 		return flag;
 	}
@@ -120,5 +150,5 @@ public class LoginPage extends BasePage{
 	public void clickLogin() {
 		WebElementUtlities.click(driver, driver.findElement(loginBtnBy));
 	}
-	
+
 }

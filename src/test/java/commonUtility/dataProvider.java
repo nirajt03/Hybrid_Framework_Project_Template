@@ -63,8 +63,9 @@ public class dataProvider {
 		for(HashMap<String, String> map:testData) {
 			obj[i][0]=map.get("UserType");
 			obj[i][1]=map.get("TestCaseID");
-			obj[i][2]=map.get("LoginType");
-			obj[i][3]=map.get("ExpSearchText");
+			obj[i][2]=map.get("Username");
+			obj[i][3]=map.get("Password");
+			obj[i][4]=map.get("ExpErrorMessage");
 			
 			i++;
 		}

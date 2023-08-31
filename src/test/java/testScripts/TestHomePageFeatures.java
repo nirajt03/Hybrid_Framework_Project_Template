@@ -31,8 +31,10 @@ public class TestHomePageFeatures extends BaseTest{
 		//Login to Pluralsight Application
 		SearchPage searchpage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);
 
+		//move to home page
 		HomePage homePage =searchpage.moveToHomePage();
 	    
+		//assert validations
 		String actHomePageHeader = homePage.getHomePageHeader();
 		Assert.assertEquals(actHomePageHeader, expHomePageHeader);
 		

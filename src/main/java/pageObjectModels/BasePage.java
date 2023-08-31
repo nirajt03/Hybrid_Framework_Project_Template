@@ -50,7 +50,7 @@ public class BasePage {
 	 * @return
 	 * @throws Throwable
 	 */
-	public LoginPage logoutFromPluralsightApplication() throws Throwable {
+	public LoginPage logoutFromPluralsightApplication() {
 
 		WebElementUtlities.explicitWaitForElementToBeVisible(driver, logoutIcon);
 
@@ -93,7 +93,7 @@ public class BasePage {
 	 * @return
 	 */
 	public String getSearchPlaceholderText() {
-		return WebElementUtlities.getAttributeByValue(driver, driver.findElement(headerSearchBox));
+		return WebElementUtlities.getAttributeUsingValue(driver, driver.findElement(headerSearchBox),"placeholder");
 	}
 
 	/**
@@ -265,7 +265,7 @@ public class BasePage {
 	 * Refresh Page
 	 * @throws Throwable
 	 */
-	public void refreshPage() throws Throwable {
+	public void refreshPage() {
 		driver.navigate().refresh();
 	}
 
