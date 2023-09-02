@@ -23,7 +23,7 @@ public class LoginPage extends BasePage{
 	private By passwordBy = By.xpath("//input[@id='Password']");
 	private By loginBtnBy = By.xpath("//span[@id='login_on_login_page']");
 	private By headerRibbonTextVisible = By.xpath("//div[@id='sign_in_fail' and @style='display: block;']//p");
-	private By headerRibbonTextInvisible = By.xpath("//div[@id='sign_in_fail' and @style='display: none;']//p");
+	//private By headerRibbonTextInvisible = By.xpath("//div[@id='sign_in_fail' and @style='display: none;']//p");
 
 	/**
 	 * Pluralsight Application Login

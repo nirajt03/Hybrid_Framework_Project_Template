@@ -29,10 +29,10 @@ public class TestHomePageFeatures extends BaseTest{
 		System.out.println("URL opened: Navigated to Pluralsight Login page");
 
 		//Login to Pluralsight Application
-		SearchPage searchpage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);
+		SearchPage searchPage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);
 
 		//move to home page
-		HomePage homePage =searchpage.moveToHomePage();
+		HomePage homePage =searchPage.moveToHomePage();
 	    
 		//assert validations
 		String actHomePageHeader = homePage.getHomePageHeader();
@@ -42,7 +42,7 @@ public class TestHomePageFeatures extends BaseTest{
 	    Assert.assertEquals(actHomePageDesc, expHomePageDesc);
 				
 		//Logout from Pluralsight Application
-		searchpage.logoutFromPluralsightApplication();
+		searchPage.logoutFromPluralsightApplication();
 	}
 
 }

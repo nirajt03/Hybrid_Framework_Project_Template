@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import commonUtility.BaseTest;
 import commonUtility.dataProvider;
+import pageObjectModels.CoursePage;
 import pageObjectModels.LoginPage;
 import pageObjectModels.SearchPage;
 
@@ -20,7 +21,9 @@ public class TestCoursePageFeatures extends BaseTest{
 	 * @throws Throwable
 	 */
 	@Test(dataProvider = "CoursePageFeatures", dataProviderClass = dataProvider.class,groups= {"verifyCoursePageFeatures","Regression","Smoke"})
-	public void verifyCoursePageFeatures(String userType,String testCaseID,String loginType,String expSearchText) throws Throwable {
+	public void verifyCoursePageFeatures(String userType,String testCaseID,String loginType,String courseName,String expCourseHeaderText, 
+			String expCourseDescriptionText,String expFreeTrailButtonText, String expCourseOverviewText) throws Throwable {
+		
 		System.out.println("TestScript : Running -> Verify Course Page Features");
 
 		//Open Application
@@ -28,16 +31,31 @@ public class TestCoursePageFeatures extends BaseTest{
 		System.out.println("URL opened: Navigated to Pluralsight Login page");
 
 		//Login to Pluralsight Application
-		SearchPage searchpage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);
+		SearchPage searchPage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);
 
-	    
-		
-		
-		
+		searchPage.clearAllTabs();
 
+		searchPage.clickCourseTabDetails();
+		
+		CoursePage coursePage= searchPage.moveToCoursePage(courseName);
+		
+		String courseHeaderText = coursePage.getCoursePageHeader();
+		Assert.assertEquals(courseHeaderText, expCourseHeaderText);
+		
+		String courseDescriptionText = coursePage.getCourseDescription();
+		Assert.assertEquals(courseDescriptionText, expCourseDescriptionText);
+		
+		boolean isAuthorLinkVisible = coursePage.validateAuthorLinkVisible();
+		Assert.assertTrue(isAuthorLinkVisible, "");
+		
+		String freeTrailButtonText = coursePage.getFreeTrailButtonText();
+		Assert.assertEquals(freeTrailButtonText, expFreeTrailButtonText);
+		
+		String courseOverviewText = coursePage.getCourseOverviewButtonText();
+		Assert.assertEquals(courseOverviewText, expCourseOverviewText);
 				
 		//Logout from Pluralsight Application
-		searchpage.logoutFromPluralsightApplication();
+		searchPage.logoutFromPluralsightApplication();
 	}
 
 }

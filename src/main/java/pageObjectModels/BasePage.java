@@ -46,6 +46,15 @@ public class BasePage {
 
 
 	/**
+	 * move To Home Page
+	 * @return
+	 */
+	public HomePage moveToHomePage() {
+		navigateToDifferentPage(System.getProperty("user.dir") + "\\src\\main\\resources\\WebPages\\HomePage.html");
+		return new HomePage(driver);
+	}
+	
+	/**
 	 * Logout From Pluralsight Application
 	 * @return
 	 * @throws Throwable

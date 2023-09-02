@@ -91,7 +91,11 @@ public class dataProvider {
 			obj[i][0]=map.get("UserType");
 			obj[i][1]=map.get("TestCaseID");
 			obj[i][2]=map.get("LoginType");
-			obj[i][3]=map.get("ExpSearchText");
+			obj[i][3]=map.get("CourseName");
+			obj[i][4]=map.get("ExpCourseHeaderText");
+			obj[i][5]=map.get("ExpCourseDescriptionText");
+			obj[i][6]=map.get("ExpFreeTrailText");
+			obj[i][7]=map.get("ExpCourseOverviewText");
 			
 			i++;
 		}
@@ -144,7 +148,9 @@ public class dataProvider {
 			obj[i][0]=map.get("UserType");
 			obj[i][1]=map.get("TestCaseID");
 			obj[i][2]=map.get("LoginType");
-			obj[i][3]=map.get("ExpSearchText");
+			obj[i][3]=map.get("CourseName");
+			obj[i][4]=map.get("ExpCourseHeaderText");
+			obj[i][5]=map.get("ExpCourseDescriptionText");
 			
 			i++;
 		}
@@ -170,7 +176,7 @@ public class dataProvider {
 			obj[i][0]=map.get("UserType");
 			obj[i][1]=map.get("TestCaseID");
 			obj[i][2]=map.get("LoginType");
-			obj[i][3]=map.get("ExpSearchText");
+			obj[i][3]=map.get("CourseName");
 			
 			i++;
 		}

@@ -28,14 +28,14 @@ public class TestLoginPage extends BaseTest{
 		System.out.println("URL opened: Navigated to Pluralsight Login page");
 
 		//Login to Pluralsight Application
-		SearchPage searchpage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);
+		SearchPage searchPage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);
 
 		//assert validation
-		String actSearchBoxText = searchpage.getSearchPlaceholderText();
+		String actSearchBoxText = searchPage.getSearchPlaceholderText();
 		Assert.assertEquals(actSearchBoxText, expSearchText);
 						
 		//Logout from Pluralsight Application
-		searchpage.logoutFromPluralsightApplication();
+		searchPage.logoutFromPluralsightApplication();
 	}
 
 }
