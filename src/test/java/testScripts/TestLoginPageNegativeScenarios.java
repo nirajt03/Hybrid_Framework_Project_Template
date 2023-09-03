@@ -6,8 +6,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import commonUtility.BaseTest;
-import commonUtility.RetryAnalyzer;
 import commonUtility.dataProvider;
+import helperTestUtility.RetryAnalyzer;
 import pageObjectModels.LoginPage;
 
 /**
