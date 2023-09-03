@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import commonUtility.BaseTest;
+import commonUtility.RetryAnalyzer;
 import commonUtility.dataProvider;
 import pageObjectModels.LoginPage;
 
@@ -22,7 +23,7 @@ public class TestLoginPageNegativeScenarios extends BaseTest{
 	 *
 	 * @throws Throwable
 	 */
-	@Test(dataProvider = "NegativeLoginScenarios", dataProviderClass = dataProvider.class,groups= {"verifyLoginPageNegativeScenarios","Regression","Smoke"})
+	@Test(dataProvider = "NegativeLoginScenarios", retryAnalyzer = RetryAnalyzer.class, dataProviderClass = dataProvider.class,groups= {"verifyLoginPageNegativeScenarios","Regression","Smoke"})
 	public void verifyLoginPageNegativeScenarios(String userType,String testCaseID,String username,String password,String expErrorMessage) throws Throwable {
 		logger.info("TestScript : Running -> verify Login Page Negative Scenarios");
 

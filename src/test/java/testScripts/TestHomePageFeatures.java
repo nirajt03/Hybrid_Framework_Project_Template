@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import commonUtility.BaseTest;
+import commonUtility.RetryAnalyzer;
 import commonUtility.dataProvider;
 import pageObjectModels.HomePage;
 import pageObjectModels.LoginPage;
@@ -24,7 +25,7 @@ public class TestHomePageFeatures extends BaseTest{
 	 *
 	 * @throws Throwable
 	 */
-	@Test(dataProvider = "HomePageFeatures", dataProviderClass = dataProvider.class,groups= {"verifyHomePageFeatures","Regression","Smoke"})
+	@Test(dataProvider = "HomePageFeatures",retryAnalyzer = RetryAnalyzer.class, dataProviderClass = dataProvider.class,groups= {"verifyHomePageFeatures","Regression","Smoke"})
 	public void verifyHomePageFeatures(String userType,String testCaseID,String loginType,String expHomePageHeader,String expHomePageDesc) throws Throwable {
 		logger.info("TestScript : Running -> Verify Home Page Features");
 

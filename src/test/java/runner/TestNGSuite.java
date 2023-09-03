@@ -15,6 +15,7 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
+import commonUtility.RetryListerner;
 import excelUtilities.ExcelUtilities;
 import exceptions.FileDoesNotExistsException;
 import exceptions.InCorrectConfigConfigParameters;
@@ -70,6 +71,7 @@ public class TestNGSuite {
 		testName.setXmlClasses(classList) ;
 
 		listenerList.add(ReportingUtility.class);
+		listenerList.add(RetryListerner.class);
 		suiteList.add(suiteName);
 		TestNGRun.setXmlSuites(suiteList);
 

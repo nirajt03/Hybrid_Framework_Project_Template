@@ -11,6 +11,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import commonUtility.BaseTest;
+import commonUtility.RetryAnalyzer;
 import commonUtility.dataProvider;
 import pageObjectModels.LoginPage;
 import pageObjectModels.SearchPage;
@@ -30,7 +31,7 @@ public class TestSearchPageFeatures extends BaseTest{
 	 *
 	 * @throws Throwable
 	 */
-	@Test(dataProvider = "SearchPageFeatures", dataProviderClass = dataProvider.class,groups= {"verifySearchPageFeatures","Regression","Smoke"})
+	@Test(dataProvider = "SearchPageFeatures",retryAnalyzer = RetryAnalyzer.class, dataProviderClass = dataProvider.class,groups= {"verifySearchPageFeatures","Regression","Smoke"})
 	public void verifySearchPageFeatures(String userType,String testCaseID,String loginType,String courseName) throws Throwable {
 		logger.info("TestScript : Running -> Verify Search Page Features");
 

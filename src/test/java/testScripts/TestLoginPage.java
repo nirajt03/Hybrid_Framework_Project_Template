@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import commonUtility.BaseTest;
+import commonUtility.RetryAnalyzer;
 import commonUtility.dataProvider;
 import pageObjectModels.LoginPage;
 import pageObjectModels.SearchPage;
@@ -23,7 +24,7 @@ public class TestLoginPage extends BaseTest{
 	 *
 	 * @throws Throwable
 	 */
-	@Test(dataProvider = "LoginData", dataProviderClass = dataProvider.class,groups= {"verifyLoginFunctionality","Regression","Smoke"})
+	@Test(dataProvider = "LoginData",retryAnalyzer = RetryAnalyzer.class,dataProviderClass = dataProvider.class,groups= {"verifyLoginFunctionality","Regression","Smoke"})
 	public void verifyLoginFunctionality(String userType,String testCaseID,String loginType,String expSearchText) throws Throwable {
 		logger.info("TestScript : Running -> verify Login Functionality");
 
@@ -37,7 +38,7 @@ public class TestLoginPage extends BaseTest{
 		//assert validation
 		String actSearchBoxText = searchPage.getSearchPlaceholderText();
 		Assert.assertEquals(actSearchBoxText, expSearchText);
-						
+							
 		//Logout from Pluralsight Application
 		searchPage.logoutFromPluralsightApplication();
 	}

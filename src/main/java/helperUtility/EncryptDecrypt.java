@@ -25,10 +25,9 @@ public class EncryptDecrypt {
 		 try {
 			key = AESEncryptDecryptUtil.generateKey(KeySize.OneTwentyEight);
 		} catch (NoSuchAlgorithmException e) {
-			System.out.println("Failed to generate Secret Key : "+e.getMessage());
+			System.out.println("Failed to generate Secret Key : "+ e.getMessage());
 		}
 	}
-	
 	
 	/**
 	 * encrypt String

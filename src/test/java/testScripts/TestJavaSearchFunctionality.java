@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import commonUtility.BaseTest;
+import commonUtility.RetryAnalyzer;
 import commonUtility.dataProvider;
 import pageObjectModels.CoursePage;
 import pageObjectModels.LoginPage;
@@ -28,7 +29,7 @@ public class TestJavaSearchFunctionality extends BaseTest{
 	 *
 	 * @throws Throwable
 	 */
-	@Test(dataProvider = "JavaSearchFunctionality", dataProviderClass = dataProvider.class,groups= {"verifyJavaSearchFunctionality","Regression","Smoke"})
+	@Test(dataProvider = "JavaSearchFunctionality",retryAnalyzer = RetryAnalyzer.class, dataProviderClass = dataProvider.class,groups= {"verifyJavaSearchFunctionality","Regression","Smoke"})
 	public void verifyJavaSearchFunctionality(String userType,String testCaseID,String loginType,String courseName,String expCourseHeaderText,String expCourseDescriptionText) throws Throwable {
 		logger.info("TestScript : Running -> Verify Java Search Functionality");
 

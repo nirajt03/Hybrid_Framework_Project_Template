@@ -28,7 +28,8 @@ import screenRecorderUtilities.ScreenRecorderUtil.TypeOfScreen;
  * 
  * @author Niraj.Tiwari
  */
-@Listeners(ReportingUtility.class)
+@Listeners({RetryListerner.class, ReportingUtility.class})
+//@Listeners(ReportingUtility.class)
 public class BaseTest {
 	
 	public static final Logger logger = LogManager.getLogger(BaseTest.class);

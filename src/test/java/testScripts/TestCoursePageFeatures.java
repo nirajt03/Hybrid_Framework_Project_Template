@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import commonUtility.BaseTest;
+import commonUtility.RetryAnalyzer;
 import commonUtility.dataProvider;
 import pageObjectModels.CoursePage;
 import pageObjectModels.LoginPage;
@@ -24,7 +25,7 @@ public class TestCoursePageFeatures extends BaseTest{
 	 *
 	 * @throws Throwable
 	 */
-	@Test(dataProvider = "CoursePageFeatures", dataProviderClass = dataProvider.class,groups= {"verifyCoursePageFeatures","Regression","Smoke"})
+	@Test(dataProvider = "CoursePageFeatures",retryAnalyzer = RetryAnalyzer.class,dataProviderClass = dataProvider.class,groups= {"verifyCoursePageFeatures","Regression","Smoke"})
 	public void verifyCoursePageFeatures(String userType,String testCaseID,String loginType,String courseName,String expCourseHeaderText, 
 			String expCourseDescriptionText,String expFreeTrailButtonText, String expCourseOverviewText) throws Throwable {
 		
