@@ -16,9 +16,13 @@ import org.openqa.selenium.WebDriver;
 import excelUtilities.ExcelUtilities;
 import exceptions.NoRowFoundException;
 import exceptions.ObjectLengthNotCorrectException;
+import helperUtility.EncryptDecrypt;
 import pageObjectModels.LoginPage;
 import pageObjectModels.SearchPage;
 import webElementUtilities.WebElementUtlities;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Arch Utilities
@@ -27,6 +31,7 @@ import webElementUtilities.WebElementUtlities;
  */
 public class ArchUtilities  {
 
+	public static final Logger logger = LogManager.getLogger(ArchUtilities.class);
 
 	WebElementUtlities webelementUtil = new WebElementUtlities();
 	protected WebDriver driver;
@@ -56,14 +61,9 @@ public class ArchUtilities  {
 		String[][] searchData={{"UserType",userType}, {"LoginType",loginType}};
 		ArrayList<HashMap<String, String>> rowData = ExcelUtilities.getAllRowsData(sheetObject,searchData);
 
-		// Get the Username
-		String userNameValue = rowData.get(0).get("Username");
-
-		// Get the Password
-		String passwordValue = rowData.get(0).get("Password");
-
-		map.put("Username", userNameValue);
-		map.put("Password", passwordValue);
+		// Get the Username & Password and map encrypted details  		
+		map.put("Username", EncryptDecrypt.encryptString(rowData.get(0).get("Username")));
+		map.put("Password", EncryptDecrypt.encryptString(rowData.get(0).get("Password")));
 		return map;
 	}
 
@@ -78,10 +78,10 @@ public class ArchUtilities  {
 	public SearchPage loginToPluralsightApplication(LoginPage loginPage,String userType,String loginType) throws Throwable  {
 		// Get User Credential
 		HashMap<String, String> usercredential = getUserCredential(userType,loginType);
-
+	
 		//Login pluralsight application
 		SearchPage searchpage = loginPage.pluralsightApplicationLogin( usercredential.get("Username"), usercredential.get("Password"));
-		System.out.println("Successfully Login To Pluralsight Application Using"+ usercredential.get("Username")+ "::"+usercredential.get("Password")+"Credential");
+		logger.info("Successfully Login To Pluralsight Application");
 		return searchpage;
 	}
 

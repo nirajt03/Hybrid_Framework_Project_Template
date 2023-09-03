@@ -1,5 +1,7 @@
 package testScripts;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,6 +16,8 @@ import pageObjectModels.SearchPage;
  * @author Niraj.Tiwari
  */
 public class TestLoginPage extends BaseTest{
+	public static final Logger logger = LogManager.getLogger(TestLoginPage.class);
+	
 	/**
 	 * Verify Login for all roles
 	 *
@@ -21,11 +25,11 @@ public class TestLoginPage extends BaseTest{
 	 */
 	@Test(dataProvider = "LoginData", dataProviderClass = dataProvider.class,groups= {"verifyLoginFunctionality","Regression","Smoke"})
 	public void verifyLoginFunctionality(String userType,String testCaseID,String loginType,String expSearchText) throws Throwable {
-		System.out.println("TestScript : Running -> verify Login Functionality");
+		logger.info("TestScript : Running -> verify Login Functionality");
 
 		//Open Application
 		LoginPage loginPage = openApplication(System.getProperty("url"));
-		System.out.println("URL opened: Navigated to Pluralsight Login page");
+		logger.info("URL opened: Navigated to Pluralsight Login page");
 
 		//Login to Pluralsight Application
 		SearchPage searchPage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);

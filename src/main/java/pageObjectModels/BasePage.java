@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -26,6 +28,8 @@ import webElementUtilities.WebElementUtlities;
 public class BasePage {
 
 	protected WebDriver driver;
+	
+	public static final Logger logger = LogManager.getLogger(BasePage.class);
 
 	public BasePage(WebDriver rdriver) {
 		this.driver = rdriver;
@@ -64,10 +68,9 @@ public class BasePage {
 		WebElementUtlities.explicitWaitForElementToBeVisible(driver, logoutIcon);
 
 		WebElementUtlities.click(driver, driver.findElement(logoutIcon));
-		System.out.println("Logout button clicked");
+		logger.info("Logout button clicked");
 		handleAlert(driver);
-
-		System.out.println("Successfully Logged Out from Pluralsight application");
+		logger.info("Successfully Logged Out from Pluralsight application");
 		return (new LoginPage(driver));
 	}
 
@@ -123,9 +126,9 @@ public class BasePage {
 			wait.until(ExpectedConditions.alertIsPresent());
 			Alert alert = driver.switchTo().alert();
 			alert.accept();
-			System.out.println("Accepted pop up alert");
+			logger.info("Accepted pop up alert");
 		}catch(NoAlertPresentException ex) {
-			System.out.println("Alert is NOT Displayed");
+			logger.info("Alert is NOT Displayed");
 		}
 	}
 
@@ -138,9 +141,9 @@ public class BasePage {
 			Alert alert = driver.switchTo().alert();
 			alert.accept();
 			isAlertAccepted=true;
-			System.out.println("Accepted pop up alert");
+			logger.info("Accepted pop up alert");
 		}catch(NoAlertPresentException ex) {
-			System.out.println("Alert is NOT Displayed");
+			logger.info("Alert is NOT Displayed");
 		}
 	}
 
@@ -152,9 +155,9 @@ public class BasePage {
 		try{
 			Alert alert = driver.switchTo().alert();
 			alert.dismiss();
-			System.out.println("Canceled pop up alert");
+			logger.info("Canceled pop up alert");
 		}catch(NoAlertPresentException ex) {
-			System.out.println("Alert is NOT Displayed");
+			logger.info("Alert is NOT Displayed");
 		}
 	}
 
@@ -167,9 +170,9 @@ public class BasePage {
 		boolean flag=false;
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		if(wait.until(ExpectedConditions.alertIsPresent())==null)
-			System.out.println("No alert");
+			logger.info("No alert");
 		else {
-			System.out.println("Alert present");
+			logger.info("Alert present");
 			flag=true;
 		}
 		return flag;
@@ -199,12 +202,12 @@ public class BasePage {
 		if (loaderCount == 1) {
 			do {
 				customWaitInSec(2);
-				System.out.println("Loader Visible");
+				logger.info("Loader Visible");
 				loaderCount = driver.findElements(visibleLoaderXpath).size();
 				if (stopwatch.elapsed().getSeconds() > timeOut)
 					break;
 			} while (loaderCount == 1);
-			System.out.println("Loader Invisible");
+			logger.info("Loader Invisible");
 			stopwatch.stop();
 		}
 		customWaitInSec(1);
@@ -238,7 +241,7 @@ public class BasePage {
 		WebElementUtlities.moveToElement(driver, buttonElement);
 
 		WebElementUtlities.click(driver, buttonElement);
-		System.out.println("Clicked On "+buttonName+" Button");
+		logger.info("Clicked On "+buttonName+" Button");
 	}
 
 	/**
@@ -321,7 +324,7 @@ public class BasePage {
 	 */
 	public void switchToRequiredWindow(String requiredWindow) {
 		driver.switchTo().window(requiredWindow);
-		System.out.println("Switched to required window");
+		logger.info("Switched to required window");
 	}
 
 	/**
@@ -348,7 +351,7 @@ public class BasePage {
 		if(requiredWindow.equals(newhandle)) {
 			boolean newHandleIsAliveOrSelected = isNewWindowSelected(driver,parentWindowHandle);
 			if(newHandleIsAliveOrSelected) {
-				System.out.println("Closed required window");
+				logger.info("Closed required window");
 				driver.close();
 			}
 		}

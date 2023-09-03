@@ -1,6 +1,8 @@
 package pageObjectModels;
 
 import java.util.ArrayList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -12,6 +14,8 @@ import webElementUtilities.WebElementUtlities;
 
 public class SearchPage  extends BasePage{
 
+	public static final Logger logger = LogManager.getLogger(SearchPage.class);
+	
 	public SearchPage(WebDriver rdriver) {
 		super(rdriver);
 	}
@@ -28,11 +32,6 @@ public class SearchPage  extends BasePage{
 	//private By activeCourseTab = By.xpath("//a[text()='Courses']//parent::li[contains(@class,'ui-tabs-active')]");
 	private By courseTabBlockVisible = By.xpath("//div[@id='tabs']//div[@id='tabs-2' and @style='display: block;']");
 	//private By courseTabBlockInvisible = By.xpath("//div[@id='tabs']//div[@id='tabs-2' and @style='display: none;']");
-
-	//(//div[contains(@class,'search-results-rows')]//div[contains(@class,'columns')])[2]
-	//(//div[contains(@class,'columns')]//div[contains(@class,'icon')]//img)[2]
-	//(//div[contains(@class,'columns')]//div[contains(@class,'title')]//a)[2]
-	//(//div[contains(@class,'columns')]//div[contains(@class,'details')]//div)[5]
 
 
 	/**

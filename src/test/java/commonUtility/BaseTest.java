@@ -30,6 +30,7 @@ import screenRecorderUtilities.ScreenRecorderUtil.TypeOfScreen;
  */
 @Listeners(ReportingUtility.class)
 public class BaseTest {
+	
 	public static final Logger logger = LogManager.getLogger(BaseTest.class);
 	
 	protected WebDriver driver;
@@ -54,7 +55,7 @@ public class BaseTest {
 	 */
 	public String getClassName() {
 		String packageName = this.getClass().getPackage().getName().trim();
-		System.out.println("Qualified Test Package name : " + packageName);
+		logger.info("Qualified Test Package name : " + packageName);
 		return packageName;
 	}
 
@@ -99,7 +100,7 @@ public class BaseTest {
 		System.setProperty("webdriver.http.factory", "jdk-http-client");
 		this.driver = new ChromeDriver(options);
 		testcontext.setAttribute("driver", driver);
-		System.out.println("Chrome Browser Initiated successfully");
+		logger.info("Chrome Browser Initiated successfully");
 	}
 
 	@AfterMethod(alwaysRun=true)
@@ -124,7 +125,7 @@ public class BaseTest {
 		try {
 			int totalTestCases = excelUtil.getTotalTestCases(passedTests,failedTests,skipedTests);
 			double passPercentage = excelUtil.calculatePercentage(passedTests,totalTestCases);
-			System.out.println("Pass Percentage : "+passPercentage+" %");
+			logger.info("Pass Percentage : "+passPercentage+" %");
 			String sheetName = "TestScripts";
 			String filePath = System.getProperty("driverFilePath");
 			String testScriptName= System.getProperty("testScriptName");
@@ -134,7 +135,7 @@ public class BaseTest {
 		}finally {
 			//driver.close();
 			driver.quit();
-			System.out.println("Chrome Browser Closed");
+			logger.info("Chrome Browser Closed");
 		}
 	}
 
@@ -142,7 +143,7 @@ public class BaseTest {
 	public void afterSuite() {
 		try {
 			ScreenRecorderUtil.stopRecord();
-			System.out.println("Screen Recording Stopped ..!!");
+			logger.info("Screen Recording Stopped ..!!");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
@@ -156,7 +157,7 @@ public class BaseTest {
 	 */
 	protected LoginPage openApplication(String url) {
 		this.driver.get(url);
-		System.out.println("Login Page Displayed");
+		logger.info("Login Page Displayed");
 		return (new LoginPage(driver));
 	}
 

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.testng.ITestNGListener;
 import org.testng.TestNG;
@@ -24,10 +27,11 @@ import reportUtilities.ReportingUtility;
  */
 public class TestNGSuite {
 
+	public static final Logger logger = LogManager.getLogger(TestNGSuite.class);
+	
 	public static void main(String[] args) throws Throwable {
-		System.out.println(System.getProperty("user.dir"));
 		String  path = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\hybridFrameworkTestDriver.xlsx";
-		System.out.println("Excel sheet Path : " +path);
+		logger.info("Excel sheet Path : " +path);
 		validateInputFile(path);
 		System.setProperty("driverFilePath", path);
 		String testExeType= getTestExecutionType().trim();
@@ -70,7 +74,7 @@ public class TestNGSuite {
 		TestNGRun.setXmlSuites(suiteList);
 
 		TestNGRun.setListenerClasses(listenerList);
-		System.out.println("Running Test Suite for "+testExeType+" group");
+		logger.info("Running Test Suite for "+testExeType+" group");
 		TestNGRun.run();
 	}
 

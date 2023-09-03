@@ -1,5 +1,7 @@
 package testScripts;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,6 +17,8 @@ import pageObjectModels.SearchPage;
  * @author Niraj.Tiwari
  */
 public class TestCoursePageFeatures extends BaseTest{
+	public static final Logger logger = LogManager.getLogger(TestCoursePageFeatures.class);
+	
 	/**
 	 * Verify Course Page Features
 	 *
@@ -24,11 +28,11 @@ public class TestCoursePageFeatures extends BaseTest{
 	public void verifyCoursePageFeatures(String userType,String testCaseID,String loginType,String courseName,String expCourseHeaderText, 
 			String expCourseDescriptionText,String expFreeTrailButtonText, String expCourseOverviewText) throws Throwable {
 		
-		System.out.println("TestScript : Running -> Verify Course Page Features");
+		logger.info("TestScript : Running -> Verify Course Page Features");
 
 		//Open Application
 		LoginPage loginPage = openApplication(System.getProperty("url"));
-		System.out.println("URL opened: Navigated to Pluralsight Login page");
+		logger.info("URL opened: Navigated to Pluralsight Login page");
 
 		//Login to Pluralsight Application
 		SearchPage searchPage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);

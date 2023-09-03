@@ -5,6 +5,18 @@ import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 
+import helperUtility.EncryptDecrypt;
+
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import webElementUtilities.WebElementUtlities;
 
 /**
@@ -13,6 +25,8 @@ import webElementUtilities.WebElementUtlities;
  * @author Niraj.Tiwari
  */
 public class LoginPage extends BasePage{
+	
+	public static final Logger logger = LogManager.getLogger(LoginPage.class);
 
 	public LoginPage(WebDriver rdriver) {
 		super(rdriver);
@@ -36,12 +50,18 @@ public class LoginPage extends BasePage{
 		// Wait till the login page is visible
 		WebElementUtlities.explicitWaitForElementToBeVisible(driver,loginForm);
 
-		// Enter User name
-		enterUsername(username);
+		try {			
+			//Decrpyt & Enter Username 
+			enterUsername(EncryptDecrypt.decryptString(username));
 
-		// Enter Password
-		enterPassword(password);
-
+			//Decrpyt & Enter Password
+			enterPassword(EncryptDecrypt.decryptString(password));
+			
+		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
+				| InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
+			System.out.println("Failed to decrypt the encrypted text : "+ e.getMessage());
+		}
+				
 		// Click on Login
 		clickLogin();
 

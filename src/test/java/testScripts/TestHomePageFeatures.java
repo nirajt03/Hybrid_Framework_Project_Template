@@ -1,5 +1,7 @@
 package testScripts;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,6 +17,8 @@ import pageObjectModels.SearchPage;
  * @author Niraj.Tiwari
  */
 public class TestHomePageFeatures extends BaseTest{
+	public static final Logger logger = LogManager.getLogger(TestHomePageFeatures.class);
+	
 	/**
 	 * Verify Home Page Features
 	 *
@@ -22,11 +26,11 @@ public class TestHomePageFeatures extends BaseTest{
 	 */
 	@Test(dataProvider = "HomePageFeatures", dataProviderClass = dataProvider.class,groups= {"verifyHomePageFeatures","Regression","Smoke"})
 	public void verifyHomePageFeatures(String userType,String testCaseID,String loginType,String expHomePageHeader,String expHomePageDesc) throws Throwable {
-		System.out.println("TestScript : Running -> Verify Home Page Features");
+		logger.info("TestScript : Running -> Verify Home Page Features");
 
 		//Open Application
 		LoginPage loginPage = openApplication(System.getProperty("url"));
-		System.out.println("URL opened: Navigated to Pluralsight Login page");
+		logger.info("URL opened: Navigated to Pluralsight Login page");
 
 		//Login to Pluralsight Application
 		SearchPage searchPage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);

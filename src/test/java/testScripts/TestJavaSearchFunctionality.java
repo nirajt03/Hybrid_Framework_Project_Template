@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -19,6 +21,8 @@ import pageObjectModels.SearchPage;
  * @author Niraj.Tiwari
  */
 public class TestJavaSearchFunctionality extends BaseTest{
+	public static final Logger logger = LogManager.getLogger(TestJavaSearchFunctionality.class);
+	
 	/**
 	 * Verify Java Search Functionality
 	 *
@@ -26,11 +30,11 @@ public class TestJavaSearchFunctionality extends BaseTest{
 	 */
 	@Test(dataProvider = "JavaSearchFunctionality", dataProviderClass = dataProvider.class,groups= {"verifyJavaSearchFunctionality","Regression","Smoke"})
 	public void verifyJavaSearchFunctionality(String userType,String testCaseID,String loginType,String courseName,String expCourseHeaderText,String expCourseDescriptionText) throws Throwable {
-		System.out.println("TestScript : Running -> Verify Java Search Functionality");
+		logger.info("TestScript : Running -> Verify Java Search Functionality");
 
 		//Open Application
 		LoginPage loginPage = openApplication(System.getProperty("url"));
-		System.out.println("URL opened: Navigated to Pluralsight Login page");
+		logger.info("URL opened: Navigated to Pluralsight Login page");
 
 		//Login to Pluralsight Application
 		SearchPage searchPage = archUtil.loginToPluralsightApplication(loginPage, userType,loginType);
