@@ -42,7 +42,7 @@ public class EncryptDecrypt {
 	 */
 	public static String encryptString(String textToBeEncrypted) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException {
 		
-		return AESEncryptDecryptUtil.encrypt(algorithm, textToBeEncrypted, key, ivParameterSpec);
+		return AESEncryptDecryptUtil.encryptText(algorithm, textToBeEncrypted, key, ivParameterSpec);
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class EncryptDecrypt {
 	 */
 	public static String decryptString(String textToBeDecrypted) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException {
 		
-		return AESEncryptDecryptUtil.decrypt(algorithm, textToBeDecrypted, key, ivParameterSpec);
+		return AESEncryptDecryptUtil.decryptText(algorithm, textToBeDecrypted, key, ivParameterSpec);
 	}
 	
 

@@ -6,8 +6,8 @@ function login() {
   //console.log( "password : "+ password );
 
   if (
-    (username == "admin" && password == "password123") ||
-    (username == "user" && password == "password123")
+    (username == "test.admin" && password == "pragyan@123") ||
+    (username == "test.user" && password == "pragyan@123")
   ) {
     alert("Successfully logged in Puralsight application");
     window.location.href = "./SearchPage.html";

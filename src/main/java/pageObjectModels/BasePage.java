@@ -54,7 +54,7 @@ public class BasePage {
 	 * @return
 	 */
 	public HomePage moveToHomePage() {
-		navigateToDifferentPage(System.getProperty("user.dir") + "\\src\\main\\resources\\WebPages\\HomePage.html");
+		navigateToDifferentPage("https://nirajt03.github.io/sample-website/HomePage.html");
 		return new HomePage(driver);
 	}
 	
