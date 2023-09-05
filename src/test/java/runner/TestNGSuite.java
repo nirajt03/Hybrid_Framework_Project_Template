@@ -33,6 +33,8 @@ public class TestNGSuite {
 	public static final Logger logger = LogManager.getLogger(TestNGSuite.class);
 
 	public static void main(String[] args)  {
+
+		//Test driver excel sheet path
 		String  path = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\hybridFrameworkTestDriver.xlsx";
 		logger.info("Excel sheet Path : " +path);
 		try {
@@ -55,14 +57,23 @@ public class TestNGSuite {
 		List<Class<? extends ITestNGListener>> listenerList = new ArrayList<Class<? extends ITestNGListener>>();
 
 		XmlSuite suiteName = new XmlSuite();
-		suiteName.setName("ChartSyncSuite");
+		suiteName.setName("Pluralsight Suite");
 
 		XmlTest testName = new XmlTest(suiteName);
-		testName.setName("ChartSyncTest");
+		testName.setName("Pluralsight Test");
+		testName.setPreserveOrder(true);
 
-		//all test scripts
+		////Creating hashmap for setting Parameters for the XML Test
+		//HashMap<String , String> testNgParams = new HashMap<String, String>();
+		//testNgParams.put("browserName", "Chrome");
+		//testNgParams.put("browserVersion", "115");
+		//testName.setParameters(testNgParams);		
+
+		//Login test scripts
 		classList.add(new XmlClass("testScripts.TestLoginPage"));
 		classList.add(new XmlClass("testScripts.TestLoginPageNegativeScenarios"));
+
+		//Pages test scripts
 		classList.add(new XmlClass("testScripts.TestCoursePageFeatures"));
 		classList.add(new XmlClass("testScripts.TestHomePageFeatures"));
 		classList.add(new XmlClass("testScripts.TestSearchPageFeatures"));
@@ -70,8 +81,7 @@ public class TestNGSuite {
 
 		List<String> methods = new ArrayList<String>();
 		TestNG TestNGRun = new TestNG();
-		if(testExeType.equals("Custom") || testExeType.equals("Regression") || testExeType.equals("Smoke") || 
-				testExeType.equals("Login")) {
+		if(testExeType.equals("Custom") || testExeType.equals("Regression") || testExeType.equals("Smoke") || testExeType.equals("Login")) {
 			methods = getTestScriptToExecute(testExeType);
 		}else {
 			methods.add(testExeType);
@@ -83,13 +93,25 @@ public class TestNGSuite {
 		listenerList.add(ReportingUtility.class);
 		listenerList.add(RetryListerner.class);
 		suiteList.add(suiteName);
-		TestNGRun.setXmlSuites(suiteList);
 
+		TestNGRun.setXmlSuites(suiteList);
 		TestNGRun.setListenerClasses(listenerList);
+
+		//Setting execution thread count for parallel execution
+		//TestNGRun.setThreadCount(2);
+
+		//TestNGRun.setVerbose(2); for console logs
+
+
 		logger.info("Running Test Suite for "+testExeType+" group");
 		TestNGRun.run();
 	}
 
+	/**
+	 * Validate Input File
+	 * @param path
+	 * @throws FileDoesNotExistsException
+	 */
 	public static void validateInputFile(String path) throws FileDoesNotExistsException {
 		File f = new File(path);
 		if(!f.exists()) {
@@ -101,6 +123,11 @@ public class TestNGSuite {
 		}
 	}
 
+	/**
+	 * Get URL
+	 * @return
+	 * @throws InCorrectConfigConfigParameters
+	 */
 	public static String geturl() throws InCorrectConfigConfigParameters  {
 		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
 		Sheet sheetObj = xlsUtil.getSheetObject("Config");
@@ -114,12 +141,21 @@ public class TestNGSuite {
 		return urlList.get(0).get(0);
 	}
 
+	/**
+	 * Get Client Code
+	 * @return
+	 */
 	public static String getClientCode() {
 		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
 		ArrayList<String> testTypeList=xlsUtil.getRowData("Driver",1);
 		return testTypeList.get(1);
 	}
 
+	/**
+	 * Get Test Script To Execute
+	 * @param groupName
+	 * @return
+	 */
 	private static ArrayList<String> getTestScriptToExecute(String groupName) {
 		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
 		Sheet sheetObj = xlsUtil.getSheetObject("TestScripts");
@@ -137,6 +173,10 @@ public class TestNGSuite {
 		return test2ExecuteList;
 	}
 
+	/**
+	 * Get Test Execution Type
+	 * @return
+	 */
 	private static String getTestExecutionType() {
 		ExcelUtilities xlsUtil = new ExcelUtilities(System.getProperty("driverFilePath"));
 		ArrayList<String> testTypeList = xlsUtil.getRowData("Driver",0);
@@ -149,6 +189,12 @@ public class TestNGSuite {
 	}
 
 	//Group wise run via TestNgSuite
+	/**
+	 * Get Test Script Names Based On Groups Column
+	 * @param groupName
+	 * @param extColumnName
+	 * @return
+	 */
 	public static  ArrayList<ArrayList<String>> getTestScriptNamesBasedOnGroupsColumn(String groupName, String... extColumnName) {
 		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
 		Sheet sheetObj = xlsUtil.getSheetObject("TestScripts");

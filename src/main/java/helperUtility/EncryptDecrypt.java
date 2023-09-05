@@ -20,9 +20,9 @@ public class EncryptDecrypt {
 	}
 	
 	/**
-	 * encrypt String
+	 * Encrypt String
 	 * @param textToBeEncrypted
-	 * @return
+	 * @return encrpyted text
 	 */
 	public static String encryptString(String textToBeEncrypted) {
 		
@@ -31,9 +31,9 @@ public class EncryptDecrypt {
 	}
 	
 	/**
-	 * decrypt String
+	 * Decrypt String
 	 * @param textToBeDecrypted
-	 * @return
+	 * @return decrypted text
 	 */
 	public static String decryptString(String textToBeDecrypted) {
 		

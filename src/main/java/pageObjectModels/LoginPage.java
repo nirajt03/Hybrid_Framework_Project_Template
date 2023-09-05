@@ -150,7 +150,6 @@ public class LoginPage extends BasePage{
 
 	/**
 	 * Click on Login
-	 *
 	 */
 	public void clickLogin() {
 		WebElementUtlities.click(driver, driver.findElement(loginBtnBy));

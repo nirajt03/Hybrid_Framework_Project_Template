@@ -68,7 +68,6 @@ public class CoursePage extends BasePage {
 		return WebElementUtlities.getText(driver, driver.findElement(playCourseOverviewBtn));
 	}
 	
-	//move to search page
 	/**
 	 * move To Search page
 	 * @return

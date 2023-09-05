@@ -42,6 +42,7 @@ public class TestCoursePageFeatures extends BaseTest{
 		
 		CoursePage coursePage= searchPage.moveToCoursePage(courseName);
 		
+		//Validate course page details
 		String courseHeaderText = coursePage.getCoursePageHeader();
 		Assert.assertEquals(courseHeaderText, expCourseHeaderText);
 		
@@ -49,7 +50,7 @@ public class TestCoursePageFeatures extends BaseTest{
 		Assert.assertEquals(courseDescriptionText, expCourseDescriptionText);
 		
 		boolean isAuthorLinkVisible = coursePage.validateAuthorLinkVisible();
-		Assert.assertTrue(isAuthorLinkVisible, "");
+		Assert.assertTrue(isAuthorLinkVisible, "Author Link is not visible");
 		
 		String freeTrailButtonText = coursePage.getFreeTrailButtonText();
 		Assert.assertEquals(freeTrailButtonText, expFreeTrailButtonText);

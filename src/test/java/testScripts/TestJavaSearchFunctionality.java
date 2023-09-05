@@ -42,6 +42,7 @@ public class TestJavaSearchFunctionality extends BaseTest{
 
 		searchPage.clearAllTabs();
 
+		//Validate Java Course Search Functionality
 		searchPage.clickCourseTabDetails();
 		List<String> listOfCourseDetails = searchPage.getCoursesListDetails();		
 		assertThat(listOfCourseDetails)

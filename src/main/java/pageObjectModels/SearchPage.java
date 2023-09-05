@@ -212,7 +212,6 @@ public class SearchPage  extends BasePage{
 			WebElementUtlities.moveToElement(driver, driver.findElement(clearAllTabs));
 			WebElementUtlities.click(driver, driver.findElement(clearAllTabs));
 		}
-		
 	}
 	
 	/**
@@ -225,7 +224,6 @@ public class SearchPage  extends BasePage{
 		WebElementUtlities.click(driver, driver.findElement(courseTitleBy));
 	}
 	
-	//move to course page
 	/**
 	 * move To Course Page
 	 * @param courseName
