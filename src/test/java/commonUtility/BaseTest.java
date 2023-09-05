@@ -146,8 +146,8 @@ public class BaseTest {
 	@AfterClass(alwaysRun = true)
 	public void afterClass() {
 		try {
-			int totalTestCases = excelUtil.getTotalTestCases(passedTests,failedTests,skipedTests);
-			double passPercentage = excelUtil.calculatePercentage(passedTests,totalTestCases);
+			int totalTestCases = ExcelUtilities.getTotalTestCases(passedTests,failedTests,skipedTests);
+			double passPercentage = ExcelUtilities.calculatePercentage(passedTests,totalTestCases);
 			logger.info("Pass Percentage : "+passPercentage+" %");
 			String sheetName = "TestScripts";
 			String filePath = System.getProperty("driverFilePath");
