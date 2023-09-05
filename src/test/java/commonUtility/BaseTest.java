@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -19,6 +18,8 @@ import org.testng.annotations.Listeners;
 import excelUtilities.ExcelUtilities;
 import exceptions.FileDoesNotExistsException;
 import exceptions.InCorrectConfigConfigParameters;
+import helperTestUtility.BrowserFactory;
+import helperTestUtility.DriverFactory;
 import helperTestUtility.RetryListerner;
 import pageObjectModels.LoginPage;
 import reportUtilities.ReportingUtility;
@@ -37,8 +38,10 @@ public class BaseTest {
 
 	public static final Logger logger = LogManager.getLogger(BaseTest.class);
 
+	protected BrowserFactory bf = new BrowserFactory();
 	protected WebDriver driver;
 	ChromeOptions options;
+	
 	String path= System.getProperty("testScriptName");
 	public ArchUtilities archUtil= new ArchUtilities();
 	public ExcelUtilities excelUtil = new ExcelUtilities();
@@ -88,7 +91,6 @@ public class BaseTest {
 		} catch (InCorrectConfigConfigParameters e) {
 			e.printStackTrace();
 		}
-
 		System.setProperty("AppName Details","Pluralsight");
 		System.setProperty("Environment Details","QA");
 		String applicationTitle = "Pluralsight";
@@ -96,22 +98,30 @@ public class BaseTest {
 		System.setProperty("Report Name",applicationTitle+" Automation Test Report");
 	}
 
+//		@BeforeClass(alwaysRun = true)
+//		public void beforeClass(ITestContext testcontext) {
+//			options = new ChromeOptions();
+//			options.addArguments("start-maximized");
+//			options.addArguments("--remote-allow-origins=*");	
+//			options.setBinary("116");
+//			//options.setBrowserVersion("116");
+//	
+//			//Map<String, Object> prefs = new HashMap<>();
+//			//prefs.put("profile.default_content_setting_values.media_stream_mic", 2); // enable/disable mic or camera permissions
+//			//value "1" is used for allowing the option, "2" -- for blocking.
+//			//prefs.put("profile.default_content_setting_values.media_stream_camera", 1);
+//			//options.setExperimentalOption("prefs", prefs);
+//	
+//			System.setProperty("webdriver.http.factory", "jdk-http-client");
+//			this.driver = new ChromeDriver(options);
+//			testcontext.setAttribute("driver", driver);
+//			logger.info("Chrome Browser Initiated successfully");
+//		}
+
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass(ITestContext testcontext) {
-		options = new ChromeOptions();
-		options.addArguments("start-maximized");
-		options.addArguments("--remote-allow-origins=*");	
-		options.setBinary("115");
-		//options.setBrowserVersion("116");
-
-		//Map<String, Object> prefs = new HashMap<>();
-		//prefs.put("profile.default_content_setting_values.media_stream_mic", 2); // enable/disable mic or camera permissions
-		//value "1" is used for allowing the option, "2" -- for blocking.
-		//prefs.put("profile.default_content_setting_values.media_stream_camera", 1);
-		//options.setExperimentalOption("prefs", prefs);
-
-		System.setProperty("webdriver.http.factory", "jdk-http-client");
-		this.driver = new ChromeDriver(options);
+		DriverFactory.getInstance().setDriver(bf.createBrowserInstance("Chrome"));
+		driver = DriverFactory.getInstance().getDriver();
 		testcontext.setAttribute("driver", driver);
 		logger.info("Chrome Browser Initiated successfully");
 	}
@@ -146,8 +156,8 @@ public class BaseTest {
 		} catch (Exception e) {
 			System.out.println(e.getCause());
 		}finally {
-			//driver.close();
-			driver.quit();
+			//driver.close();//driver.quit();
+			DriverFactory.getInstance().closeDriver();
 			logger.info("Chrome Browser Closed");
 		}
 	}
@@ -174,7 +184,8 @@ public class BaseTest {
 		return (new LoginPage(driver));
 	}
 
-	/** This method is used to covert String value to boolean
+	/** 
+	 * This method is used to covert String value to boolean
 	 * @param value
 	 * @return
 	 */

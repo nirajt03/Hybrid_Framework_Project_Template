@@ -50,18 +50,32 @@ public class TestNGSuite {
 			e.printStackTrace();
 		}
 
-		//Create TestNG Suite
+		//Creating SuiteList and ClassList to be executed
 		List<XmlSuite> suiteList = new ArrayList<XmlSuite>();
 		List<XmlClass> classList = new ArrayList<XmlClass>();
 
+		//Creating ListnersList for adding listners 
 		List<Class<? extends ITestNGListener>> listenerList = new ArrayList<Class<? extends ITestNGListener>>();
 
+		//Setting name for XML Suite
 		XmlSuite suiteName = new XmlSuite();
 		suiteName.setName("Pluralsight Suite");
 
+		////Setting XML suite parallel execution mode as classes/methods
+		//suiteName.setParallel(XmlSuite.ParallelMode.METHODS);
+		//		
+		////Setting execution thread count for parallel execution
+		//suiteName.setThreadCount(2);
+		//
+		////Setting verbose count for console logs
+		//suiteName.setVerbose(2); 
+
+		//Setting name for XML tests
 		XmlTest testName = new XmlTest(suiteName);
 		testName.setName("Pluralsight Test");
-		testName.setPreserveOrder(true);
+
+		//Setting preserve order for XML tests to true --> to execute the test in required order
+		//testName.setPreserveOrder(true);
 
 		////Creating hashmap for setting Parameters for the XML Test
 		//HashMap<String , String> testNgParams = new HashMap<String, String>();
@@ -79,31 +93,32 @@ public class TestNGSuite {
 		classList.add(new XmlClass("testScripts.TestSearchPageFeatures"));
 		classList.add(new XmlClass("testScripts.TestJavaSearchFunctionality"));
 
-		List<String> methods = new ArrayList<String>();
+		//Creating TestNG object
 		TestNG TestNGRun = new TestNG();
+
+		//Creating ArrayList of Methods to be executed based on group
+		List<String> methods = new ArrayList<String>();
 		if(testExeType.equals("Custom") || testExeType.equals("Regression") || testExeType.equals("Smoke") || testExeType.equals("Login")) {
 			methods = getTestScriptToExecute(testExeType);
 		}else {
 			methods.add(testExeType);
 		}
 
+		//Creating XML Include in form of ArrayList to add multiple methods of class which need to be run
 		testName.setIncludedGroups(methods);
 		testName.setXmlClasses(classList) ;
 
+		//Adding listners classes
 		listenerList.add(ReportingUtility.class);
 		listenerList.add(RetryListerner.class);
 		suiteList.add(suiteName);
 
+		//Adding XMLSuites selected to TestNG defined
 		TestNGRun.setXmlSuites(suiteList);
 		TestNGRun.setListenerClasses(listenerList);
 
-		//Setting execution thread count for parallel execution
-		//TestNGRun.setThreadCount(2);
-
-		//TestNGRun.setVerbose(2); for console logs
-
-
 		logger.info("Running Test Suite for "+testExeType+" group");
+		//Executing TestNG created dynamic suite
 		TestNGRun.run();
 	}
 
