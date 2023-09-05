@@ -22,11 +22,9 @@ public class TestHomePageFeatures extends BaseTest{
 	
 	/**
 	 * Verify Home Page Features
-	 *
-	 * @throws Throwable
 	 */
 	@Test(dataProvider = "HomePageFeatures",retryAnalyzer = RetryAnalyzer.class, dataProviderClass = dataProvider.class,groups= {"verifyHomePageFeatures","Regression","Smoke"})
-	public void verifyHomePageFeatures(String userType,String testCaseID,String loginType,String expHomePageHeader,String expHomePageDesc) throws Throwable {
+	public void verifyHomePageFeatures(String userType,String testCaseID,String loginType,String expHomePageHeader,String expHomePageDesc) {
 		logger.info("TestScript : Running -> Verify Home Page Features");
 
 		//Open Application

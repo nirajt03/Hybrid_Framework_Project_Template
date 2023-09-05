@@ -22,12 +22,10 @@ public class TestCoursePageFeatures extends BaseTest{
 	
 	/**
 	 * Verify Course Page Features
-	 *
-	 * @throws Throwable
 	 */
 	@Test(dataProvider = "CoursePageFeatures",retryAnalyzer = RetryAnalyzer.class,dataProviderClass = dataProvider.class,groups= {"verifyCoursePageFeatures","Regression","Smoke"})
 	public void verifyCoursePageFeatures(String userType,String testCaseID,String loginType,String courseName,String expCourseHeaderText, 
-			String expCourseDescriptionText,String expFreeTrailButtonText, String expCourseOverviewText) throws Throwable {
+			String expCourseDescriptionText,String expFreeTrailButtonText, String expCourseOverviewText) {
 		
 		logger.info("TestScript : Running -> Verify Course Page Features");
 

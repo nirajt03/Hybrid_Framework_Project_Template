@@ -14,8 +14,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.openqa.selenium.WebDriver;
 
 import excelUtilities.ExcelUtilities;
+import exceptions.ColumnNameNotFoundException;
 import exceptions.NoRowFoundException;
 import exceptions.ObjectLengthNotCorrectException;
+import exceptions.SheetNotFoundException;
 import helperUtility.EncryptDecrypt;
 import pageObjectModels.LoginPage;
 import pageObjectModels.SearchPage;
@@ -47,9 +49,8 @@ public class ArchUtilities  {
 	 * Get User Credential
 	 * @param userType
 	 * @return
-	 * @throws Throwable
 	 */
-	public HashMap<String, String> getUserCredential(String userType,String loginType) throws Throwable  {
+	public HashMap<String, String> getUserCredential(String userType,String loginType) {
 
 		String path = System.getProperty("driverFilePath");
 		ExcelUtilities excelUtil = new ExcelUtilities(path);
@@ -59,7 +60,12 @@ public class ArchUtilities  {
 		Sheet sheetObject = excelUtil.getSheetObject("LoginTestData");
 
 		String[][] searchData={{"UserType",userType}, {"LoginType",loginType}};
-		ArrayList<HashMap<String, String>> rowData = ExcelUtilities.getAllRowsData(sheetObject,searchData);
+		ArrayList<HashMap<String, String>> rowData = null;
+		try {
+			rowData = ExcelUtilities.getAllRowsData(sheetObject,searchData);
+		} catch (NoRowFoundException | ObjectLengthNotCorrectException e) {
+			e.printStackTrace();
+		}
 
 		// Get the Username & Password and map encrypted details  		
 		map.put("Username", EncryptDecrypt.encryptString(rowData.get(0).get("Username")));
@@ -73,9 +79,8 @@ public class ArchUtilities  {
 	 * @param loginPage
 	 * @param userType
 	 * @return
-	 * @throws Throwable
 	 */
-	public SearchPage loginToPluralsightApplication(LoginPage loginPage,String userType,String loginType) throws Throwable  {
+	public SearchPage loginToPluralsightApplication(LoginPage loginPage,String userType,String loginType) {
 		// Get User Credential
 		HashMap<String, String> usercredential = getUserCredential(userType,loginType);
 	
@@ -91,9 +96,8 @@ public class ArchUtilities  {
 	 * @param userType
 	 * @param loginType
 	 * @return
-	 * @throws Throwable
 	 */
-	public String checkNegativeLoginScenarios(LoginPage loginPage, String username, String password) throws Throwable {
+	public String checkNegativeLoginScenarios(LoginPage loginPage, String username, String password) {
 		
 		//Login pluralsight application
 		return loginPage.pluralsightApplicationNegativeLoginScenarios(username, password);
@@ -103,26 +107,38 @@ public class ArchUtilities  {
 	 * Get Test Data
 	 * @param TestScriptName
 	 * @return
-	 * @throws Throwable
 	 */
-	public ArrayList<HashMap<String, String>> getTestData(String TestScriptName) throws Throwable {
+	public ArrayList<HashMap<String, String>> getTestData(String TestScriptName) {
 
 		ExcelUtilities excelUtilities = new ExcelUtilities();
 
 		// Get Workbook
 		Workbook book = excelUtilities.getWorkbook(System.getProperty("driverFilePath"));
 
-		Sheet testScriptSheetObj = excelUtilities.getSheetObject(book,"TestScripts");
-
+		Sheet testScriptSheetObj = null;
+		try {
+			testScriptSheetObj = excelUtilities.getSheetObject(book,"TestScripts");
+		} catch (SheetNotFoundException e) {		
+			e.printStackTrace();
+		}
 		ArrayList<ArrayList<String>> testDataSheetNameList = excelUtilities.getMultipleColumnDataBasedOnOneColumnValue(testScriptSheetObj,"TestScriptName",TestScriptName,"TestDataSheetName");
 		String testDataSheetName=(testDataSheetNameList.get(0)).get(0);
 
-		Sheet testDataSheetObj  = excelUtilities.getSheetObject(book, testDataSheetName);
+		Sheet testDataSheetObj = null;
+		try {
+			testDataSheetObj = excelUtilities.getSheetObject(book, testDataSheetName);
+		} catch (SheetNotFoundException e) {
+			e.printStackTrace();
+		}
 
 		ArrayList<HashMap<String, String>> allTestData=new ArrayList<HashMap<String, String>>();
 
 		String[][] srchData= {{"TestCaseID","Not To Run"}};
-		allTestData = getRowDataBasedOnTestcaseID(testDataSheetObj,srchData);
+		try {
+			allTestData = getRowDataBasedOnTestcaseID(testDataSheetObj,srchData);
+		} catch (ObjectLengthNotCorrectException | NoRowFoundException e) {
+			e.printStackTrace();
+		}
 		return allTestData;
 	}
 
@@ -131,19 +147,17 @@ public class ArchUtilities  {
 	 * @param sheetObject
 	 * @param srchCriteriaArray
 	 * @return
-	 * @throws Throwable
+	 * @throws ObjectLengthNotCorrectException 
+	 * @throws NoRowFoundException 
 	 */
-	public ArrayList<HashMap<String, String>> getRowDataBasedOnTestcaseID(Sheet sheetObject,String[][] srchCriteriaArray) throws Throwable
-	{    
+	public ArrayList<HashMap<String, String>> getRowDataBasedOnTestcaseID(Sheet sheetObject,String[][] srchCriteriaArray) throws ObjectLengthNotCorrectException, NoRowFoundException {    
 		for(String [] arr:srchCriteriaArray) {
 			if(arr.length !=2) {
 				throw new ObjectLengthNotCorrectException("Sreach Object inner Array Should have 2 elements, "
 						+ "while "+arr.length+" was given");
 			}
 		}
-
 		DataFormatter formatter = new DataFormatter();
-
 		ArrayList<HashMap<String,String>> allRowData = new ArrayList<HashMap<String,String>>();    
 
 		List<String> allColmnNames = ExcelUtilities.getAllColumnNames(sheetObject);        
@@ -153,7 +167,12 @@ public class ArchUtilities  {
 		for(int i=1;i<rowCount;i++) {
 			boolean srchFlag=true;
 			for(String [] arr:srchCriteriaArray) {
-				int column2CheckIndx=ExcelUtilities.getColumnIndexFrmColumnName(sheetObject,arr[0]);
+				int column2CheckIndx = 0;
+				try {
+					column2CheckIndx = ExcelUtilities.getColumnIndexFrmColumnName(sheetObject,arr[0]);
+				} catch (ColumnNameNotFoundException e) {
+					e.printStackTrace();
+				}
 				Row rowObj=sheetObject.getRow(i);
 				Cell cellObj=rowObj.getCell(column2CheckIndx);
 				String cellValue=formatter.formatCellValue(cellObj);
@@ -163,7 +182,12 @@ public class ArchUtilities  {
 				oneRowFound=true;
 				HashMap<String,String> rowData=new HashMap<String,String>();
 				for(String colName:allColmnNames) {
-					int columnIndex = ExcelUtilities.getColumnIndexFrmColumnName(sheetObject, colName);
+					int columnIndex = 0;
+					try {
+						columnIndex = ExcelUtilities.getColumnIndexFrmColumnName(sheetObject, colName);
+					} catch (ColumnNameNotFoundException e) {
+						e.printStackTrace();
+					}
 					rowData.put(colName.trim(),formatter.formatCellValue(sheetObject.getRow(i).getCell(columnIndex)).trim());
 				}
 				allRowData.add(rowData);

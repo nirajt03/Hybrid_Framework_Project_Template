@@ -22,9 +22,8 @@ public class HomePage extends BasePage{
 	/**
 	 * get Home Page Header
 	 * @return
-	 * @throws InterruptedException
 	 */
-	public String getHomePageHeader() throws InterruptedException {
+	public String getHomePageHeader() {
 		customWaitInSec(1);
 		WebElementUtlities.explicitWaitForElementToBeVisible(driver, homePageHeader, 15);
 		return WebElementUtlities.getText(driver, driver.findElement(homePageHeader));

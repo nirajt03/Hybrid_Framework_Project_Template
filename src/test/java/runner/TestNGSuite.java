@@ -18,6 +18,8 @@ import org.testng.xml.XmlTest;
 import excelUtilities.ExcelUtilities;
 import exceptions.FileDoesNotExistsException;
 import exceptions.InCorrectConfigConfigParameters;
+import exceptions.NoRowFoundException;
+import exceptions.ObjectLengthNotCorrectException;
 import helperTestUtility.RetryListerner;
 import reportUtilities.ReportingUtility;
 
@@ -29,14 +31,22 @@ import reportUtilities.ReportingUtility;
 public class TestNGSuite {
 
 	public static final Logger logger = LogManager.getLogger(TestNGSuite.class);
-	
-	public static void main(String[] args) throws Throwable {
+
+	public static void main(String[] args)  {
 		String  path = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\hybridFrameworkTestDriver.xlsx";
 		logger.info("Excel sheet Path : " +path);
-		validateInputFile(path);
+		try {
+			validateInputFile(path);
+		} catch (FileDoesNotExistsException e) {
+			e.printStackTrace();
+		}
 		System.setProperty("driverFilePath", path);
 		String testExeType= getTestExecutionType().trim();
-		System.setProperty("url",geturl());
+		try {
+			System.setProperty("url",geturl());
+		} catch (InCorrectConfigConfigParameters e) {
+			e.printStackTrace();
+		}
 
 		//Create TestNG Suite
 		List<XmlSuite> suiteList = new ArrayList<XmlSuite>();
@@ -57,7 +67,7 @@ public class TestNGSuite {
 		classList.add(new XmlClass("testScripts.TestHomePageFeatures"));
 		classList.add(new XmlClass("testScripts.TestSearchPageFeatures"));
 		classList.add(new XmlClass("testScripts.TestJavaSearchFunctionality"));
-		
+
 		List<String> methods = new ArrayList<String>();
 		TestNG TestNGRun = new TestNG();
 		if(testExeType.equals("Custom") || testExeType.equals("Regression") || testExeType.equals("Smoke") || 
@@ -91,7 +101,7 @@ public class TestNGSuite {
 		}
 	}
 
-	public static String geturl() throws Throwable {
+	public static String geturl() throws InCorrectConfigConfigParameters  {
 		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
 		Sheet sheetObj = xlsUtil.getSheetObject("Config");
 		ArrayList<ArrayList<String>> urlList = xlsUtil.getMultipleColumnDataBasedOnOneColumnValue(sheetObj,"Attribute","Env-URL","Value");
@@ -102,16 +112,15 @@ public class TestNGSuite {
 			throw new InCorrectConfigConfigParameters("Multiple values found for url-uat");
 		}
 		return urlList.get(0).get(0);
-
 	}
 
-	public static String getClientCode() throws Throwable{
+	public static String getClientCode() {
 		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
 		ArrayList<String> testTypeList=xlsUtil.getRowData("Driver",1);
 		return testTypeList.get(1);
 	}
 
-	private static ArrayList<String> getTestScriptToExecute(String groupName) throws Throwable {
+	private static ArrayList<String> getTestScriptToExecute(String groupName) {
 		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
 		Sheet sheetObj = xlsUtil.getSheetObject("TestScripts");
 		ArrayList<ArrayList<String>> test2Execute= new ArrayList<ArrayList<String>>();
@@ -128,24 +137,29 @@ public class TestNGSuite {
 		return test2ExecuteList;
 	}
 
-	private static String getTestExecutionType() throws Throwable{
-		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
-		ArrayList<String> testTypeList=xlsUtil.getRowData("Driver",0);
+	private static String getTestExecutionType() {
+		ExcelUtilities xlsUtil = new ExcelUtilities(System.getProperty("driverFilePath"));
+		ArrayList<String> testTypeList = xlsUtil.getRowData("Driver",0);
 		String executionType = testTypeList.get(1);
 		if (!(executionType.equals("Custom") || executionType.equals("Regression") || executionType.equals("Smoke") || executionType.equals("Login"))){
 			throw new IllegalArgumentException("Test Execution: "+executionType+" is invalid");
 		}
+
 		return executionType;
 	}
 
 	//Group wise run via TestNgSuite
-	@SuppressWarnings("static-access")
-	public static  ArrayList<ArrayList<String>> getTestScriptNamesBasedOnGroupsColumn(String groupName, String... extColumnName) throws Throwable{
+	public static  ArrayList<ArrayList<String>> getTestScriptNamesBasedOnGroupsColumn(String groupName, String... extColumnName) {
 		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
 		Sheet sheetObj = xlsUtil.getSheetObject("TestScripts");
 		ArrayList<ArrayList<String>> columData = new ArrayList<ArrayList<String>>();
 		String[][]srchCriteria={{"Groups",groupName}};
-		ArrayList<HashMap<String, String>> rowAllData = xlsUtil.getAllRowsData(sheetObj,srchCriteria);
+		ArrayList<HashMap<String, String>> rowAllData = null;
+		try {
+			rowAllData = ExcelUtilities.getAllRowsData(sheetObj,srchCriteria);
+		} catch (NoRowFoundException | ObjectLengthNotCorrectException e) {
+			e.printStackTrace();
+		}
 		for(HashMap<String, String> map:rowAllData) {
 			ArrayList<String> temp = new ArrayList<String>();
 			String value=map.get("Execute");

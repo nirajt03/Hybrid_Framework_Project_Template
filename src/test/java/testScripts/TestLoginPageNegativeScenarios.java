@@ -20,11 +20,9 @@ public class TestLoginPageNegativeScenarios extends BaseTest{
 	
 	/**
 	 * Verify Login Page Negative Scenarios
-	 *
-	 * @throws Throwable
 	 */
 	@Test(dataProvider = "NegativeLoginScenarios", retryAnalyzer = RetryAnalyzer.class, dataProviderClass = dataProvider.class,groups= {"verifyLoginPageNegativeScenarios","Regression","Smoke"})
-	public void verifyLoginPageNegativeScenarios(String userType,String testCaseID,String username,String password,String expErrorMessage) throws Throwable {
+	public void verifyLoginPageNegativeScenarios(String userType,String testCaseID,String username,String password,String expErrorMessage) {
 		logger.info("TestScript : Running -> verify Login Page Negative Scenarios");
 
 		//Open Application

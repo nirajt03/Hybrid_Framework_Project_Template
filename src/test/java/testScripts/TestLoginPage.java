@@ -21,11 +21,9 @@ public class TestLoginPage extends BaseTest{
 	
 	/**
 	 * Verify Login for all roles
-	 *
-	 * @throws Throwable
 	 */
 	@Test(dataProvider = "LoginData",retryAnalyzer = RetryAnalyzer.class,dataProviderClass = dataProvider.class,groups= {"verifyLoginFunctionality","Regression","Smoke"})
-	public void verifyLoginFunctionality(String userType,String testCaseID,String loginType,String expSearchText) throws Throwable {
+	public void verifyLoginFunctionality(String userType,String testCaseID,String loginType,String expSearchText) {
 		logger.info("TestScript : Running -> verify Login Functionality");
 
 		//Open Application

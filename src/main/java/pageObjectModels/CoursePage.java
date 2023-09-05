@@ -25,9 +25,8 @@ public class CoursePage extends BasePage {
 	/**
 	 * get Course PageHeader
 	 * @return
-	 * @throws InterruptedException
 	 */
-	public String getCoursePageHeader() throws InterruptedException {
+	public String getCoursePageHeader() {
 		customWaitInSec(1);
 		WebElementUtlities.explicitWaitForElementToBeVisible(driver, titleHeader, 15);
 		return WebElementUtlities.getText(driver, driver.findElement(titleHeader));
@@ -73,9 +72,8 @@ public class CoursePage extends BasePage {
 	/**
 	 * move To Search page
 	 * @return
-	 * @throws InterruptedException
 	 */
-	public SearchPage moveToSearchpage() throws InterruptedException {
+	public SearchPage moveToSearchpage() {
 		WebElementUtlities.explicitWaitForElementToBeVisible(driver, coursesLink, 10);
 		WebElementUtlities.click(driver, driver.findElement(coursesLink));
 		customWaitInSec(2);

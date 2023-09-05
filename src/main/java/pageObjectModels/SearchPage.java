@@ -101,9 +101,8 @@ public class SearchPage  extends BasePage{
 	 * get List Of Selected Filter Options
 	 * @param filterTag
 	 * @return
-	 * @throws InterruptedException 
 	 */
-	public List<String> getListOfSelectedFilterOptions(SearchPageFilterTags filterTag) throws InterruptedException{
+	public List<String> getListOfSelectedFilterOptions(SearchPageFilterTags filterTag) {
 		customWaitInSec(2);
 		new ArrayList<String>();
 		//selectRequiredFilterTab(filterTag);

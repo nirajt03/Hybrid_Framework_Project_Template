@@ -26,11 +26,9 @@ public class TestJavaSearchFunctionality extends BaseTest{
 	
 	/**
 	 * Verify Java Search Functionality
-	 *
-	 * @throws Throwable
 	 */
 	@Test(dataProvider = "JavaSearchFunctionality",retryAnalyzer = RetryAnalyzer.class, dataProviderClass = dataProvider.class,groups= {"verifyJavaSearchFunctionality","Regression","Smoke"})
-	public void verifyJavaSearchFunctionality(String userType,String testCaseID,String loginType,String courseName,String expCourseHeaderText,String expCourseDescriptionText) throws Throwable {
+	public void verifyJavaSearchFunctionality(String userType,String testCaseID,String loginType,String courseName,String expCourseHeaderText,String expCourseDescriptionText) {
 		logger.info("TestScript : Running -> Verify Java Search Functionality");
 
 		//Open Application

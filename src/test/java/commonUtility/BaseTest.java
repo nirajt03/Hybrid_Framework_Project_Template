@@ -17,6 +17,8 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
 import excelUtilities.ExcelUtilities;
+import exceptions.FileDoesNotExistsException;
+import exceptions.InCorrectConfigConfigParameters;
 import helperTestUtility.RetryListerner;
 import pageObjectModels.LoginPage;
 import reportUtilities.ReportingUtility;
@@ -32,9 +34,9 @@ import screenRecorderUtilities.ScreenRecorderUtil.TypeOfScreen;
 @Listeners({RetryListerner.class, ReportingUtility.class})
 //@Listeners(ReportingUtility.class)
 public class BaseTest {
-	
+
 	public static final Logger logger = LogManager.getLogger(BaseTest.class);
-	
+
 	protected WebDriver driver;
 	ChromeOptions options;
 	String path= System.getProperty("testScriptName");
@@ -62,7 +64,7 @@ public class BaseTest {
 	}
 
 	@BeforeSuite(alwaysRun=true)
-	public void beforeSuite() throws Throwable {
+	public void beforeSuite()  {
 		int thresholdDays = 10;
 		String testClassName = getClassName();
 		try {
@@ -75,9 +77,18 @@ public class BaseTest {
 		//from test ng suite
 		//TestNg class's part - must set below properties
 		String  path = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\hybridFrameworkTestDriver.xlsx";
-		TestNGSuite.validateInputFile(path);
+		try {
+			TestNGSuite.validateInputFile(path);
+		} catch (FileDoesNotExistsException e) {
+			e.printStackTrace();
+		}
 		System.setProperty("driverFilePath", path);
-		System.setProperty("url",TestNGSuite.geturl());
+		try {
+			System.setProperty("url",TestNGSuite.geturl());
+		} catch (InCorrectConfigConfigParameters e) {
+			e.printStackTrace();
+		}
+
 		System.setProperty("AppName Details","Pluralsight");
 		System.setProperty("Environment Details","QA");
 		String applicationTitle = "Pluralsight";
@@ -86,19 +97,19 @@ public class BaseTest {
 	}
 
 	@BeforeClass(alwaysRun = true)
-	public void beforeClass(ITestContext testcontext) throws Throwable {
+	public void beforeClass(ITestContext testcontext) {
 		options = new ChromeOptions();
 		options.addArguments("start-maximized");
 		options.addArguments("--remote-allow-origins=*");	
 		options.setBinary("115");
-     	//options.setBrowserVersion("116");
-		
+		//options.setBrowserVersion("116");
+
 		//Map<String, Object> prefs = new HashMap<>();
 		//prefs.put("profile.default_content_setting_values.media_stream_mic", 2); // enable/disable mic or camera permissions
 		//value "1" is used for allowing the option, "2" -- for blocking.
 		//prefs.put("profile.default_content_setting_values.media_stream_camera", 1);
 		//options.setExperimentalOption("prefs", prefs);
-		
+
 		System.setProperty("webdriver.http.factory", "jdk-http-client");
 		this.driver = new ChromeDriver(options);
 		testcontext.setAttribute("driver", driver);
@@ -123,7 +134,7 @@ public class BaseTest {
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void afterClass() throws Throwable {
+	public void afterClass() {
 		try {
 			int totalTestCases = excelUtil.getTotalTestCases(passedTests,failedTests,skipedTests);
 			double passPercentage = excelUtil.calculatePercentage(passedTests,totalTestCases);
@@ -151,7 +162,7 @@ public class BaseTest {
 			System.out.println(e);
 		}
 	}
-	
+
 	/**
 	 * Open Application : URL
 	 * @param url

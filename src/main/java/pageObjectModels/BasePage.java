@@ -61,7 +61,6 @@ public class BasePage {
 	/**
 	 * Logout From Pluralsight Application
 	 * @return
-	 * @throws Throwable
 	 */
 	public LoginPage logoutFromPluralsightApplication() {
 
@@ -192,9 +191,8 @@ public class BasePage {
 	 * Wait Till The Loader is Invisible
 	 * @param driver
 	 * @param visibleLoaderXpath
-	 * @throws Throwable
 	 */
-	public void waitTillTheLoaderInvisible(By visibleLoaderXpath, By invisibleLoaderXpath) throws Throwable {
+	public void waitTillTheLoaderInvisible(By visibleLoaderXpath, By invisibleLoaderXpath) {
 		int timeOut = 50;
 		Stopwatch stopwatch = Stopwatch.createStarted();
 		int loaderCount;
@@ -217,20 +215,21 @@ public class BasePage {
 	/**
 	 * Custom Wait In Sec
 	 * @param timeOut
-	 * @throws InterruptedException 
 	 */
-	public void customWaitInSec(long timeOut) throws InterruptedException  {
-		TimeUnit.SECONDS.sleep(timeOut);
+	public void customWaitInSec(long timeOut)  {
+		try {
+			TimeUnit.SECONDS.sleep(timeOut);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
-
 
 	/**
 	 * Click On Button
 	 * @param buttonName
 	 * @param buttonTag
-	 * @throws Throwable 
 	 */
-	public void clickOnButton(String buttonName,ButtonTag buttonTag) throws Throwable {
+	public void clickOnButton(String buttonName,ButtonTag buttonTag) {
 		WebElement buttonElement=null;
 		if(buttonTag.equals(ButtonTag.input))
 			buttonElement=driver.findElement(By.xpath("//input[@value='"+buttonName+"']"));
@@ -256,9 +255,8 @@ public class BasePage {
 	 * @param driver
 	 * @param popUpBox - select inner or login page boxes
 	 * @return
-	 * @throws Throwable
 	 */
-	public boolean isSuccessPopUpBoxMsgVisible(WebDriver driver, By popUpBox) throws Throwable {
+	public boolean isSuccessPopUpBoxMsgVisible(WebDriver driver, By popUpBox) {
 		boolean flag = false;
 		flag = WebElementUtlities.isElementVisible(driver,popUpBox);
 		return flag;
@@ -275,7 +273,6 @@ public class BasePage {
 
 	/**
 	 * Refresh Page
-	 * @throws Throwable
 	 */
 	public void refreshPage() {
 		driver.navigate().refresh();
@@ -285,9 +282,8 @@ public class BasePage {
 	 * Switch To New Window
 	 * @param btnToBeClick : Clicks a button after which new window is opened
 	 * @return
-	 * @throws Throwable
 	 */
-	public String switchToNewWindow(WebElement btnToBeClick) throws Throwable {
+	public String switchToNewWindow(WebElement btnToBeClick) {
 		WebElementUtlities.click(driver,btnToBeClick );
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 		wait.until(ExpectedConditions.numberOfWindowsToBe(2));

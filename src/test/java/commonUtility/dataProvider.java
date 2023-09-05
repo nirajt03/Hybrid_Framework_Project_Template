@@ -22,10 +22,9 @@ public class dataProvider {
 	/**
 	 * LoginData
 	 * @return
-	 * @throws Throwable
 	 */
 	@DataProvider(name = "LoginData")
-	public Object[][] getLoginTestData() throws Throwable {
+	public Object[][] getLoginTestData() {
 
 		ArrayList<HashMap<String, String>> testData = archUtl.getTestData("verifyLoginFunctionality");
 		
@@ -48,10 +47,9 @@ public class dataProvider {
 	/**
 	 * Negative Login Scenarios
 	 * @return
-	 * @throws Throwable
 	 */
 	@DataProvider(name = "NegativeLoginScenarios")
-	public Object[][] getNegativeLoginScenariosData() throws Throwable {
+	public Object[][] getNegativeLoginScenariosData() {
 
 		ArrayList<HashMap<String, String>> testData = archUtl.getTestData("verifyLoginPageNegativeScenarios");
 		
@@ -75,10 +73,9 @@ public class dataProvider {
 	/**
 	 * Course Page Features
 	 * @return
-	 * @throws Throwable
 	 */
 	@DataProvider(name = "CoursePageFeatures")
-	public Object[][] getCoursePageFeaturesData() throws Throwable {
+	public Object[][] getCoursePageFeaturesData() {
 
 		ArrayList<HashMap<String, String>> testData = archUtl.getTestData("verifyCoursePageFeatures");
 		
@@ -105,10 +102,9 @@ public class dataProvider {
 	/**
 	 * Home Page Features
 	 * @return
-	 * @throws Throwable
 	 */
 	@DataProvider(name = "HomePageFeatures")
-	public Object[][] getHomePageFeaturesData() throws Throwable {
+	public Object[][] getHomePageFeaturesData() {
 
 		ArrayList<HashMap<String, String>> testData = archUtl.getTestData("verifyHomePageFeatures");
 		
@@ -132,10 +128,9 @@ public class dataProvider {
 	/**
 	 * Java Search Functionality
 	 * @return
-	 * @throws Throwable
 	 */
 	@DataProvider(name = "JavaSearchFunctionality")
-	public Object[][] getJavaSearchFunctionalityData() throws Throwable {
+	public Object[][] getJavaSearchFunctionalityData() {
 
 		ArrayList<HashMap<String, String>> testData = archUtl.getTestData("verifyJavaSearchFunctionality");
 		
@@ -160,10 +155,9 @@ public class dataProvider {
 	/**
 	 * Search Page Features
 	 * @return
-	 * @throws Throwable
 	 */
 	@DataProvider(name = "SearchPageFeatures")
-	public Object[][] getSearchPageFeaturesData() throws Throwable {
+	public Object[][] getSearchPageFeaturesData() {
 
 		ArrayList<HashMap<String, String>> testData = archUtl.getTestData("verifySearchPageFeatures");
 		

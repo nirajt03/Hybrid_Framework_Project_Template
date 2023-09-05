@@ -28,11 +28,9 @@ public class TestSearchPageFeatures extends BaseTest{
 	
 	/**
 	 * Verify Search Page Features
-	 *
-	 * @throws Throwable
 	 */
 	@Test(dataProvider = "SearchPageFeatures",retryAnalyzer = RetryAnalyzer.class, dataProviderClass = dataProvider.class,groups= {"verifySearchPageFeatures","Regression","Smoke"})
-	public void verifySearchPageFeatures(String userType,String testCaseID,String loginType,String courseName) throws Throwable {
+	public void verifySearchPageFeatures(String userType,String testCaseID,String loginType,String courseName) {
 		logger.info("TestScript : Running -> Verify Search Page Features");
 
 		//Open Application
