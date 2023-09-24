@@ -41,6 +41,8 @@ public class TestLoginPage extends BaseTest{
 		
 		//Logout from Pluralsight Application
 		searchPage.logoutFromPluralsightApplication();
+		
+		//just a test comment
 	}
 
 }
