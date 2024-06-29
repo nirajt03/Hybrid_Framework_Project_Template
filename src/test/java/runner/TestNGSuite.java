@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -15,7 +14,7 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-import excelUtilities.ExcelUtilities;
+import excelUtilities.ExcelUtility;
 import exceptions.FileDoesNotExistsException;
 import exceptions.InCorrectConfigConfigParameters;
 import exceptions.NoRowFoundException;
@@ -138,7 +137,7 @@ public class TestNGSuite {
 	 * @throws InCorrectConfigConfigParameters
 	 */
 	public static String geturl() throws InCorrectConfigConfigParameters  {
-		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
+		ExcelUtility xlsUtil= new ExcelUtility(System.getProperty("driverFilePath"));
 		Sheet sheetObj = xlsUtil.getSheetObject("Config");
 		ArrayList<ArrayList<String>> urlList = xlsUtil.getMultipleColumnDataBasedOnOneColumnValue(sheetObj,"Attribute","Env-URL","Value");
 		if(urlList.size() == 0) {
@@ -155,7 +154,7 @@ public class TestNGSuite {
 	 * @return
 	 */
 	public static String getClientCode() {
-		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
+		ExcelUtility xlsUtil= new ExcelUtility(System.getProperty("driverFilePath"));
 		ArrayList<String> testTypeList=xlsUtil.getRowData("Driver",1);
 		return testTypeList.get(1);
 	}
@@ -166,7 +165,7 @@ public class TestNGSuite {
 	 * @return
 	 */
 	private static ArrayList<String> getTestScriptToExecute(String groupName) {
-		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
+		ExcelUtility xlsUtil= new ExcelUtility(System.getProperty("driverFilePath"));
 		Sheet sheetObj = xlsUtil.getSheetObject("TestScripts");
 		ArrayList<ArrayList<String>> test2Execute= new ArrayList<ArrayList<String>>();
 		if (groupName.equals("Custom")||groupName.equals("Smoke")||groupName.equals("Regression"))
@@ -187,7 +186,7 @@ public class TestNGSuite {
 	 * @return
 	 */
 	private static String getTestExecutionType() {
-		ExcelUtilities xlsUtil = new ExcelUtilities(System.getProperty("driverFilePath"));
+		ExcelUtility xlsUtil = new ExcelUtility(System.getProperty("driverFilePath"));
 		ArrayList<String> testTypeList = xlsUtil.getRowData("Driver",0);
 		String executionType = testTypeList.get(1);
 		if (!(executionType.equals("Custom") || executionType.equals("Regression") || executionType.equals("Smoke") || executionType.equals("Login"))){
@@ -205,13 +204,13 @@ public class TestNGSuite {
 	 * @return
 	 */
 	public static  ArrayList<ArrayList<String>> getTestScriptNamesBasedOnGroupsColumn(String groupName, String... extColumnName) {
-		ExcelUtilities xlsUtil= new ExcelUtilities(System.getProperty("driverFilePath"));
+		ExcelUtility xlsUtil= new ExcelUtility(System.getProperty("driverFilePath"));
 		Sheet sheetObj = xlsUtil.getSheetObject("TestScripts");
 		ArrayList<ArrayList<String>> columData = new ArrayList<ArrayList<String>>();
 		String[][]srchCriteria={{"Groups",groupName}};
 		ArrayList<HashMap<String, String>> rowAllData = null;
 		try {
-			rowAllData = ExcelUtilities.getAllRowsData(sheetObj,srchCriteria);
+			rowAllData = ExcelUtility.getAllRowsData(sheetObj,srchCriteria);
 		} catch (NoRowFoundException | ObjectLengthNotCorrectException e) {
 			e.printStackTrace();
 		}

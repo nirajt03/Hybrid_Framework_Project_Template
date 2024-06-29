@@ -23,8 +23,8 @@ public class BrowserFactory {
 			options.addArguments("start-maximized");
 			options.addArguments("--incognito");
 			options.addArguments("--remote-allow-origins=*");	
-			options.setBinary("116");
-			//options.setBrowserVersion("116");
+			//options.setBinary("118");
+			options.setBrowserVersion("124");
 
 			//Map<String, Object> prefs = new HashMap<>();
 			// enable/disable mic or camera permissions
