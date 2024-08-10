@@ -46,7 +46,7 @@ public class BaseTest {
 	public static final Logger logger = LogManager.getLogger(BaseTest.class);
 
 	protected BrowserFactory bf = new BrowserFactory();
-	Set<String> manualTCIDsSet = new TreeSet<String>();
+    static Set<String> manualTCIDsSet = new TreeSet<String>();
 	WebDriver driver;
 	ChromeOptions options;
 

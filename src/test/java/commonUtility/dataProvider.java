@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import org.testng.annotations.DataProvider;
 
-import testScripts.TestLoginPageNegativeScenarios;
 
 /**
  * Data Provider

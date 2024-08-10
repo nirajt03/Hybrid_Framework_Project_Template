@@ -64,17 +64,15 @@ public class TestJavaSearchFunctionality extends BaseTest{
 		ReportLogs.addLogWithScreenshot(Status.INFO,"Successfully moved to Course Page");
 
 		String courseHeaderText = coursePage.getCoursePageHeader();
-		ReportLogs.addLogForStringComparision(courseHeaderText, expCourseHeaderText,"Course Header Text");
+		ReportLogs.addLogForStringComparison(courseHeaderText, expCourseHeaderText,"Course Header Text");
 		Assert.assertEquals(courseHeaderText, expCourseHeaderText,"Course Header Text is not equal");
 
 		String courseDescriptionText = coursePage.getCourseDescription();
-		ReportLogs.addLogForStringComparision(courseDescriptionText, expCourseDescriptionText,"Course Description Text");
+		ReportLogs.addLogForStringComparison(courseDescriptionText, expCourseDescriptionText,"Course Description Text");
 		Assert.assertEquals(courseDescriptionText, expCourseDescriptionText,"Course Description Text is not equal");
 
 		//Logout from Pluralsight Application
 		searchPage.logoutFromPluralsightApplication();
 		ReportLogs.addLog(Status.INFO,"Successfully logged out of Pluralsight Application");
-
 	}
-
 }

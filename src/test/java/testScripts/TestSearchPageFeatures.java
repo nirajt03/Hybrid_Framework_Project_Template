@@ -29,7 +29,6 @@ import pageObjectModels.SearchPage.SearchPageNavBarListTabs;
  * @author Niraj.Tiwari
  */
 public class TestSearchPageFeatures extends BaseTest{
-	
 	public static final Logger logger = LogManager.getLogger(TestSearchPageFeatures.class);
 	
 	/**
@@ -98,7 +97,5 @@ public class TestSearchPageFeatures extends BaseTest{
 		//Logout from Pluralsight Application
 		searchPage.logoutFromPluralsightApplication();
 		ReportLogs.addLog(Status.INFO,"Successfully logged out of Pluralsight Application");
-
 	}
-
 }

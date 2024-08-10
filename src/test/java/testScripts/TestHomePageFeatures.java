@@ -47,11 +47,11 @@ public class TestHomePageFeatures extends BaseTest{
 	    
 		//assert validations
 		String actHomePageHeader = homePage.getHomePageHeader();
-		ReportLogs.addLogForStringComparision(actHomePageHeader, expHomePageHeader,"Home Page Header Text");
+		ReportLogs.addLogForStringComparison(actHomePageHeader, expHomePageHeader,"Home Page Header Text");
 		Assert.assertEquals(actHomePageHeader, expHomePageHeader,"Home Page Header Text");
 		
 	    String actHomePageDesc = homePage.getHomePageDescription();
-		ReportLogs.addLogForStringComparision(actHomePageDesc, expHomePageDesc,"Home Page Description Text");
+		ReportLogs.addLogForStringComparison(actHomePageDesc, expHomePageDesc,"Home Page Description Text");
 	    Assert.assertEquals(actHomePageDesc, expHomePageDesc,"Home Page Description Text is not equal");
 	    
 		ReportLogs.addLogWithScreenshot(Status.INFO, "Home Page Verification");
@@ -59,7 +59,5 @@ public class TestHomePageFeatures extends BaseTest{
 		//Logout from Pluralsight Application
 		searchPage.logoutFromPluralsightApplication();
 		ReportLogs.addLog(Status.INFO,"Successfully logged out of Pluralsight Application");
-
 	}
-
 }

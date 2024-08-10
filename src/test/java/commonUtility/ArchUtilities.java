@@ -1,8 +1,8 @@
 package commonUtility;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -207,9 +207,8 @@ public class ArchUtilities  {
 	 * @return
 	 */
 	public static String getCurrentDateinMMDDYYYY() {
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-		Date date = new Date();
-		String currentDate = formatter.format(date);
-		return currentDate;
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+	    LocalDate date = LocalDate.now();
+	    return date.format(formatter);
 	}
 }

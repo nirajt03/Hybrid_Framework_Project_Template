@@ -52,11 +52,11 @@ public class TestCoursePageFeatures extends BaseTest{
 		
 		//Validate course page details
 		String courseHeaderText = coursePage.getCoursePageHeader();
-		ReportLogs.addLogForStringComparision(courseHeaderText, expCourseHeaderText,"Course Header Text");
+		ReportLogs.addLogForStringComparison(courseHeaderText, expCourseHeaderText,"Course Header Text");
 		Assert.assertEquals(courseHeaderText, expCourseHeaderText, "Course Header Text is not equal");
 		
 		String courseDescriptionText = coursePage.getCourseDescription();
-		ReportLogs.addLogForStringComparision(courseDescriptionText, expCourseDescriptionText,"Course Description Text");
+		ReportLogs.addLogForStringComparison(courseDescriptionText, expCourseDescriptionText,"Course Description Text");
 		Assert.assertEquals(courseDescriptionText, expCourseDescriptionText,"Course Description Text is not equal");
 		ReportLogs.addLogWithScreenshot(Status.INFO,"Course Page verification");
 		
@@ -64,11 +64,11 @@ public class TestCoursePageFeatures extends BaseTest{
 		Assert.assertTrue(isAuthorLinkVisible, "Author Link is not visible");
 		
 		String freeTrailButtonText = coursePage.getFreeTrailButtonText();
-		ReportLogs.addLogForStringComparision(freeTrailButtonText, expFreeTrailButtonText,"Free Trail Button Text");
+		ReportLogs.addLogForStringComparison(freeTrailButtonText, expFreeTrailButtonText,"Free Trail Button Text");
 		Assert.assertEquals(freeTrailButtonText, expFreeTrailButtonText,"Free Trail Button Text is not equal");
 		
 		String courseOverviewText = coursePage.getCourseOverviewButtonText();
-		ReportLogs.addLogForStringComparision(courseOverviewText, expCourseOverviewText,"Course Header Text");
+		ReportLogs.addLogForStringComparison(courseOverviewText, expCourseOverviewText,"Course Header Text");
 		Assert.assertEquals(courseOverviewText, expCourseOverviewText,"Course Overview Text is not equal");
 		ReportLogs.addLogWithScreenshot(Status.INFO,"Course Overview verification");
 				
@@ -76,5 +76,4 @@ public class TestCoursePageFeatures extends BaseTest{
 		searchPage.logoutFromPluralsightApplication();
 		ReportLogs.addLog(Status.INFO,"Successfully logged out of Pluralsight Application");
 	}
-
 }
