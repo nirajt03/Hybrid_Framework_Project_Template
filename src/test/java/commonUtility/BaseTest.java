@@ -1,5 +1,8 @@
 package commonUtility;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -45,8 +48,13 @@ public class BaseTest {
 
 	public static final Logger logger = LogManager.getLogger(BaseTest.class);
 
+	private static final int LINE_LENGTH = 100;
+
 	protected BrowserFactory bf = new BrowserFactory();
-    static Set<String> manualTCIDsSet = new TreeSet<String>();
+	static private Set<String> manualTCIDsSet = new TreeSet<String>();
+	static private Set<String> passedTCIDsSet = new TreeSet<String>();
+	static private Set<String> failedTCIDsSet = new TreeSet<String>();
+
 	WebDriver driver;
 	ChromeOptions options;
 
@@ -138,15 +146,28 @@ public class BaseTest {
 		testScriptName = result.getMethod().getRealClass().getSimpleName();
 		System.setProperty("testScriptName", testScriptName);
 		try {
+			List<Object> myModel = Arrays.asList(result.getParameters());
+			int lastIndex = myModel.size() - 1;
+			Object object = myModel.get(lastIndex);
 			if (result.getStatus() == ITestResult.SUCCESS) {
-				++passedTests;
-			} else if (result.getStatus() == ITestResult.FAILURE) {
-				++failedTests;
-			} else if (result.getStatus() == ITestResult.SKIP) {
-				++skipedTests;
+				++passedTests;	
+				String[] objectArr = object.toString().split(",");
+				for (String obj : objectArr) {
+					passedTCIDsSet.add(obj.trim());
+				}
 			}
+			else if (result.getStatus() == ITestResult.FAILURE) {
+				++failedTests;
+				String[] objectArr = object.toString().split(",");
+				for (String obj : objectArr) {
+					failedTCIDsSet.add(obj.trim());
+				}
+			}				
+			else if (result.getStatus() == ITestResult.SKIP)
+				++skipedTests;
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 
@@ -177,6 +198,15 @@ public class BaseTest {
 	@AfterSuite(alwaysRun=true)
 	public void afterSuite() {
 		try {
+			//logger.info("=====================================================================");
+			//logger.info("Passed Manual TC IDs : "+ passedTCIDsSet.toString());
+			//logger.info("=====================================================================");
+			//logger.info("Failed Manual TC IDs : "+ failedTCIDsSet.toString());
+			//logger.info("=====================================================================");
+
+			clearFile();
+			logTestExecutionStatusInTextFile(passedTCIDsSet,failedTCIDsSet);
+
 			ScreenRecorderUtility.stopRecord();
 			logger.info("Screen Recording Stopped ..!!");
 		} catch (Exception e) {
@@ -210,6 +240,62 @@ public class BaseTest {
 			flag = false;
 		}
 		return flag;
-	}	
+	}
+	
+	/**
+	 * Clear File
+	 */
+	public static void clearFile() {
+		String  textFilePath = System.getProperty("user.dir") + "\\src\\main\\resources\\Execution Status.txt";
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(textFilePath))) {
+			// Clears the file content
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	/**
+	 * Log Test Execution Status In Text File
+	 * @param passedTCIDsSet
+	 * @param failedTCIDsSet
+	 */
+	public static void logTestExecutionStatusInTextFile(Set<String> passedTCIDsSet, Set<String> failedTCIDsSet) {
+		// Specify the file path
+		String  textFilePath = System.getProperty("user.dir") + "\\src\\main\\resources\\Execution Status.txt";
+
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(textFilePath, false))) {
+			// Write the passed test cases
+			writer.write("=====================================================================\n");
+			writer.write("Passed Manual TC IDs : \n" + formatString(passedTCIDsSet.toString()) + "\n");
+			writer.write("=====================================================================\n" + "\n" + "\n");
+
+			// Write the failed test cases
+			writer.write("=====================================================================\n");
+			writer.write("Failed Manual TC IDs : \n" + formatString(failedTCIDsSet.toString()) + "\n");
+			writer.write("=====================================================================\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Format String
+	 * @param input
+	 * @return
+	 */
+	private static String formatString(String input) {
+		StringBuilder formattedString = new StringBuilder();
+		String[] words = input.split(" ");
+
+		int currentLength = 0;
+		for (String word : words) {
+			if (currentLength + word.length() > LINE_LENGTH) {
+				formattedString.append("\n");
+				currentLength = 0;
+			}
+			formattedString.append(word).append(" ");
+			currentLength += word.length() + 1;
+		}
+		return formattedString.toString().trim();
+	}
 }
