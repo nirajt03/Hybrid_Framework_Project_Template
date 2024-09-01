@@ -25,7 +25,7 @@ import webElementUtilities.WebElementUtility;
  * Base Page
  * @author Niraj.Tiwari
  */
-public class BasePage {
+public abstract class BasePage {
 
 	protected WebDriver driver;
 	
@@ -65,7 +65,6 @@ public class BasePage {
 	public LoginPage logoutFromPluralsightApplication() {
 
 		WebElementUtility.explicitWaitForElementToBeVisible(driver, logoutIcon);
-
 		WebElementUtility.click(driver, driver.findElement(logoutIcon));
 		logger.info("Logout button clicked");
 		handleAlert(driver);
